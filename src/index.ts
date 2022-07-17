@@ -43,6 +43,23 @@ async function getPatrimony(page: Page): Promise<number | null> {
   return parseFloat(patrimony);
 }
 
+async function getDividendYieldInPercentage(
+  page: Page
+): Promise<number | null> {
+  const xpath = `/html/body/main/div[2]/div[1]/div[4]/div/div[1]/strong`;
+
+  const rawDividendYield = await extractFrom(page, xpath);
+
+  if (!rawDividendYield) {
+    console.warn(`Não foi possível extrair "DIVIDEND YIELD" de ${page.url()}`);
+    return null;
+  }
+
+  const dividendYield = rawDividendYield.replace(",", ".");
+
+  return parseFloat(dividendYield);
+}
+
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
 
@@ -55,5 +72,9 @@ console.log(typeof currentValue);
 const patrimony = await getPatrimony(page);
 console.log(patrimony);
 console.log(typeof patrimony);
+
+const dividendYield = await getDividendYieldInPercentage(page);
+console.log(dividendYield);
+console.log(typeof dividendYield);
 
 await browser.close();
