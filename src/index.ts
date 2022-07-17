@@ -1,19 +1,29 @@
-import { launch } from "puppeteer";
+import { launch, Page } from "puppeteer";
 
-(async () => {
-  const browser = await launch({ headless: false });
-  const page = await browser.newPage();
+async function getCurrentValue(page: Page): Promise<string | null> {
+  await page.waitForXPath(
+    `/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`
+  );
 
-  await page.goto("https://statusinvest.com.br/fundos-imobiliarios/mxrf11");
+  const currentValueElementHandle = await page.$x(
+    `/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`
+  );
 
+  const currentValue = await page.evaluate(
+    (currentValueTag) => currentValueTag.textContent,
+    currentValueElementHandle[0]
+  );
 
-  await page.waitForXPath(`/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`);
+  return currentValue;
+}
 
-  const currentValueElementHandle = await page.$x(`/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`);
+const browser = await launch({ headless: false });
+const page = await browser.newPage();
 
-  const currentValue = await page.evaluate(currentValueTag => currentValueTag.textContent, currentValueElementHandle[0]);
+await page.goto("https://statusinvest.com.br/fundos-imobiliarios/mxrf11");
 
-  console.log(currentValue);
+const currentValue = await getCurrentValue(page);
 
-  await browser.close();
-})();
+console.log(currentValue);
+
+await browser.close();
