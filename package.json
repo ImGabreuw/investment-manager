@@ -1,0 +1,24 @@
+{
+  "name": "investment-manager",
+  "version": "1.0.0",
+  "description": "application to help people organize their investments",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "dev": "npx tsc && node ./dist/index.js"
+  },
+  "engines": {
+    "node": ">=14.16"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.0.5",
+    "@types/puppeteer": "^5.4.6",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "puppeteer": "^15.4.0"
+  }
+}
