@@ -10,14 +10,15 @@ class StatusInvest {
     public readonly page: Page
   ) {}
 
-
   private async getCurrentValue(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`;
 
     const rawCurrentValue = await extractFrom(this.page, xpath);
 
     if (!rawCurrentValue) {
-      console.warn(`Não foi possível extrair "VALOR ATUAL" de ${this.page.url()}`);
+      console.warn(
+        `Não foi possível extrair "VALOR ATUAL" de ${this.page.url()}`
+      );
       return null;
     }
 
@@ -32,7 +33,9 @@ class StatusInvest {
     const rawPatrimony = await extractFrom(this.page, xpath);
 
     if (!rawPatrimony) {
-      console.warn(`Não foi possível extrair "PATRIMÔNIO" de ${this.page.url()}`);
+      console.warn(
+        `Não foi possível extrair "PATRIMÔNIO" de ${this.page.url()}`
+      );
       return null;
     }
 
@@ -70,7 +73,9 @@ class StatusInvest {
     const rawDividendYield = await extractFrom(this.page, xpath);
 
     if (!rawDividendYield) {
-      console.warn(`Não foi possível extrair "DIVIDEND YIELD" de ${this.page.url()}`);
+      console.warn(
+        `Não foi possível extrair "DIVIDEND YIELD" de ${this.page.url()}`
+      );
       return null;
     }
 
@@ -85,7 +90,9 @@ class StatusInvest {
     const rawCashValue = await extractFrom(this.page, xpath);
 
     if (!rawCashValue) {
-      console.warn(`Não foi possível extrair "VALOR EM CAIXA" de ${this.page.url()}`);
+      console.warn(
+        `Não foi possível extrair "VALOR EM CAIXA" de ${this.page.url()}`
+      );
       return null;
     }
 
@@ -183,6 +190,42 @@ class StatusInvest {
     return parseFloat(valueCAGR);
   }
 
+  private async getAverageMonthlyYieldLast24Months(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[6]/div/div/div[1]/div/div/strong`;
+
+    const rawAverageMonthlyYield = await extractFrom(this.page, xpath);
+
+    if (!rawAverageMonthlyYield) {
+      console.warn(
+        `Não foi possível extrair "RENDIMENTO MÉDIO (24M)" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const averageMonthlyYield = rawAverageMonthlyYield.replace(",", ".");
+
+    return parseFloat(averageMonthlyYield);
+  }
+
+  private async getAverageDailyLiquidityLast30Days(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[6]/div/div/div[3]/div/div/div/strong`;
+
+    const rawAverageDailyLiquidity = await extractFrom(this.page, xpath);
+
+    if (!rawAverageDailyLiquidity) {
+      console.warn(
+        `Não foi possível extrair "LIQUIDEZ DIÁRIA MÉDIA (30D)" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const averageDailyLiquidity = rawAverageDailyLiquidity
+      .replaceAll(".", "")
+      .replace(",", ".");
+
+    return parseFloat(averageDailyLiquidity);
+  }
+
   async getRealStateFundIndicators(): Promise<RealStateFundIndicators> {
     await this.page.goto(`${StatusInvest.BASE_URL}/${this.realStateFundName}`);
 
@@ -192,10 +235,16 @@ class StatusInvest {
     const dividendYield = await this.getDividendYieldInPercentage();
     const cashValue = await this.getCashValue();
     const numberOfShareholders = await this.getNumberOfShareholders();
-    const dividendYieldCAGRLast3Years = await this.getDividendYieldCAGRLast3Years();
-    const dividendYieldCAGRLast5Years = await this.getDividendYieldCAGRLast5Years();
+    const dividendYieldCAGRLast3Years =
+      await this.getDividendYieldCAGRLast3Years();
+    const dividendYieldCAGRLast5Years =
+      await this.getDividendYieldCAGRLast5Years();
     const valueCAGRLast3Years = await this.getValueCAGRLast3Years();
     const valueCAGRLast5Years = await this.getValueCAGRLast5Years();
+    const averageMonthlyYieldLast24Months =
+      await this.getAverageMonthlyYieldLast24Months();
+    const averageDailyLiquidityLast30Days =
+      await this.getAverageDailyLiquidityLast30Days();
 
     return new RealStateFundIndicators(
       currentValue,
@@ -207,10 +256,11 @@ class StatusInvest {
       dividendYieldCAGRLast3Years,
       dividendYieldCAGRLast5Years,
       valueCAGRLast3Years,
-      valueCAGRLast5Years
+      valueCAGRLast5Years,
+      averageMonthlyYieldLast24Months,
+      averageDailyLiquidityLast30Days
     );
   }
-
 }
 
 export { StatusInvest };
