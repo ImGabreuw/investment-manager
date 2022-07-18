@@ -49,7 +49,9 @@ async function getMarketValue(page: Page): Promise<number | null> {
   const rawMarketValue = await extractFrom(page, xpath);
 
   if (!rawMarketValue) {
-    console.warn(`Não foi possível extrair "VALOR DE MERCADO" de ${page.url()}`);
+    console.warn(
+      `Não foi possível extrair "VALOR DE MERCADO" de ${page.url()}`
+    );
     return null;
   }
 
@@ -103,13 +105,34 @@ async function getNumberOfShareholders(page: Page): Promise<number | null> {
   const rawNumberOfShareholder = await extractFrom(page, xpath);
 
   if (!rawNumberOfShareholder) {
-    console.warn(`Não foi possível extrair "NÚMERO DE COTISTAS" de ${page.url()}`);
+    console.warn(
+      `Não foi possível extrair "NÚMERO DE COTISTAS" de ${page.url()}`
+    );
     return null;
   }
 
   const numberOfShareholder = rawNumberOfShareholder.replaceAll(".", "");
 
   return parseFloat(numberOfShareholder);
+}
+
+async function getDividendYieldCAGRLast3Years(
+  page: Page
+): Promise<number | null> {
+  const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[1]/strong`;
+
+  const rawDividendYieldCAGR = await extractFrom(page, xpath);
+
+  if (!rawDividendYieldCAGR) {
+    console.warn(
+      `Não foi possível extrair "DY CAGR (3 ANOS)" de ${page.url()}`
+    );
+    return null;
+  }
+
+  const dividendYieldCAGR = rawDividendYieldCAGR.replaceAll(",", ".");
+
+  return parseFloat(dividendYieldCAGR);
 }
 
 const browser = await launch({ headless: false });
@@ -140,5 +163,9 @@ console.log(typeof cashValue);
 const numberOfShareholders = await getNumberOfShareholders(page);
 console.log(numberOfShareholders);
 console.log(typeof numberOfShareholders);
+
+const dividendYieldCAGR = await getDividendYieldCAGRLast3Years(page);
+console.log(dividendYieldCAGR);
+console.log(typeof dividendYieldCAGR);
 
 await browser.close();
