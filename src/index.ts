@@ -60,6 +60,25 @@ async function getDividendYieldInPercentage(
   return parseFloat(dividendYield);
 }
 
+async function getCashValue(page: Page): Promise<number | null> {
+  const xpath = `/html/body/main/div[2]/div[5]/div/div[3]/div/div[2]/span[2]`;
+
+  const rawCashValue = await extractFrom(page, xpath);
+
+  if (!rawCashValue) {
+    console.warn(`Não foi possível extrair "VALOR EM CAIXA" de ${page.url()}`);
+    return null;
+  }
+
+  const cashValue = rawCashValue
+    .split(" ")
+    .pop()
+    ?.replaceAll(".", "")
+    .replace(",", ".") as string;
+
+  return parseFloat(cashValue);
+}
+
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
 
@@ -76,5 +95,9 @@ console.log(typeof patrimony);
 const dividendYield = await getDividendYieldInPercentage(page);
 console.log(dividendYield);
 console.log(typeof dividendYield);
+
+const cashValue = await getCashValue(page);
+console.log(cashValue);
+console.log(typeof cashValue);
 
 await browser.close();
