@@ -1,18 +1,28 @@
 export class RealStateFundIndicators {
-  constructor(
-    public readonly currentValue: number | null,
-    public readonly patrimony: number | null,
-    public readonly marketValue: number | null,
-    public readonly dividendYield: number | null,
-    public readonly cashValue: number | null,
-    public readonly numberOfShareholders: number | null,
-    public readonly dividendYieldCAGRLast3Years: number | null,
-    public readonly dividendYieldCAGRLast5Years: number | null,
-    public readonly valueCAGRLast3Years: number | null,
-    public readonly valueCAGRLast5Years: number | null
-  ) {}
+  readonly dividendLast12Months: number | null;
+  readonly numberOfShares: number | null;
+  readonly patrimonyValue: number | null;
+  readonly pVP: number | null;
 
-  getDividendLast12Months(): number | null {
+  constructor(
+    readonly currentValue: number | null,
+    readonly patrimony: number | null,
+    readonly marketValue: number | null,
+    readonly dividendYield: number | null,
+    readonly cashValue: number | null,
+    readonly numberOfShareholders: number | null,
+    readonly dividendYieldCAGRLast3Years: number | null,
+    readonly dividendYieldCAGRLast5Years: number | null,
+    readonly valueCAGRLast3Years: number | null,
+    readonly valueCAGRLast5Years: number | null
+  ) {
+    this.dividendLast12Months = this.getDividendLast12Months();
+    this.numberOfShares = this.getNumberOfShares();
+    this.patrimonyValue = this.getPatrimonyValue();
+    this.pVP = this.getPVP();
+  }
+
+  private getDividendLast12Months(): number | null {
     if (!this.currentValue || !this.dividendYield) {
       return null;
     }
@@ -23,7 +33,7 @@ export class RealStateFundIndicators {
     return parseFloat(dividendYieldLast12Months.toFixed(2));
   }
 
-  getNumberOfShares(): number | null {
+  private getNumberOfShares(): number | null {
     if (!this.marketValue || !this.currentValue) {
       return null;
     }
@@ -33,7 +43,7 @@ export class RealStateFundIndicators {
     return parseFloat(numberOfShares.toFixed(0));
   }
 
-  getPatrimonyValue(): number | null {
+  private getPatrimonyValue(): number | null {
     const numberOfShares = this.getNumberOfShares();
 
     if (!this.patrimony || !numberOfShares) {
@@ -45,7 +55,7 @@ export class RealStateFundIndicators {
     return parseFloat(patrimonyValue.toFixed(2));
   }
 
-  getPVP(): number | null {
+  private getPVP(): number | null {
     if (!this.marketValue || !this.patrimony) {
       return null;
     }
