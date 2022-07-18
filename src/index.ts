@@ -154,6 +154,23 @@ async function getDividendYieldCAGRLast5Years(
   return parseFloat(dividendYieldCAGR);
 }
 
+async function getValueCAGRLast3Years(page: Page): Promise<number | null> {
+  const xpath = `/html/body/main/div[2]/div[5]/div/div[5]/div/div[1]/strong`;
+
+  const rawValueCAGR = await extractFrom(page, xpath);
+
+  if (!rawValueCAGR) {
+    console.warn(
+      `Não foi possível extrair "VALOR CAGR (3 ANOS)" de ${page.url()}`
+    );
+    return null;
+  }
+
+  const valueCAGR = rawValueCAGR.replaceAll(",", ".");
+
+  return parseFloat(valueCAGR);
+}
+
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
 
@@ -190,5 +207,9 @@ console.log(typeof dividendYieldCAGRLast3Years);
 const dividendYieldCAGRLast5Years = await getDividendYieldCAGRLast5Years(page);
 console.log(dividendYieldCAGRLast5Years);
 console.log(typeof dividendYieldCAGRLast5Years);
+
+const valueCAGRLast3Years = await getValueCAGRLast3Years(page);
+console.log(valueCAGRLast3Years);
+console.log(typeof valueCAGRLast3Years);
 
 await browser.close();
