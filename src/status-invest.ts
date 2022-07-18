@@ -2,216 +2,215 @@ import { Page } from "puppeteer";
 import { RealStateFundIndicators } from "./real-state-fund-Indicators.js";
 import { extractFrom } from "./utils.js";
 
-async function getCurrentValue(page: Page): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`;
+class StatusInvest {
+  static readonly BASE_URL = "https://statusinvest.com.br/fundos-imobiliarios";
 
-  const rawCurrentValue = await extractFrom(page, xpath);
+  constructor(
+    public readonly realStateFundName: string,
+    public readonly page: Page
+  ) {}
 
-  if (!rawCurrentValue) {
-    console.warn(`Não foi possível extrair "VALOR ATUAL" de ${page.url()}`);
-    return null;
+
+  private async getCurrentValue(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`;
+
+    const rawCurrentValue = await extractFrom(this.page, xpath);
+
+    if (!rawCurrentValue) {
+      console.warn(`Não foi possível extrair "VALOR ATUAL" de ${this.page.url()}`);
+      return null;
+    }
+
+    const currentValue = rawCurrentValue.replace(",", ".");
+
+    return parseFloat(currentValue);
   }
 
-  const currentValue = rawCurrentValue.replace(",", ".");
+  private async getPatrimony(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[1]/div/div[2]/span[2]`;
 
-  return parseFloat(currentValue);
-}
+    const rawPatrimony = await extractFrom(this.page, xpath);
 
-async function getPatrimony(page: Page): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[1]/div/div[2]/span[2]`;
+    if (!rawPatrimony) {
+      console.warn(`Não foi possível extrair "PATRIMÔNIO" de ${this.page.url()}`);
+      return null;
+    }
 
-  const rawPatrimony = await extractFrom(page, xpath);
+    const patrimony = rawPatrimony
+      .split(" ")
+      .pop()
+      ?.replaceAll(".", "") as string;
 
-  if (!rawPatrimony) {
-    console.warn(`Não foi possível extrair "PATRIMÔNIO" de ${page.url()}`);
-    return null;
+    return parseFloat(patrimony);
   }
 
-  const patrimony = rawPatrimony
-    .split(" ")
-    .pop()
-    ?.replaceAll(".", "") as string;
+  private async getMarketValue(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[2]/div/div[2]/span[2]`;
 
-  return parseFloat(patrimony);
-}
+    const rawMarketValue = await extractFrom(this.page, xpath);
 
-async function getMarketValue(page: Page): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[2]/div/div[2]/span[2]`;
+    if (!rawMarketValue) {
+      console.warn(
+        `Não foi possível extrair "VALOR DE MERCADO" de ${this.page.url()}`
+      );
+      return null;
+    }
 
-  const rawMarketValue = await extractFrom(page, xpath);
+    const marketValue = rawMarketValue
+      .split(" ")
+      .pop()
+      ?.replaceAll(".", "") as string;
 
-  if (!rawMarketValue) {
-    console.warn(
-      `Não foi possível extrair "VALOR DE MERCADO" de ${page.url()}`
+    return parseFloat(marketValue);
+  }
+
+  private async getDividendYieldInPercentage(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[1]/div[4]/div/div[1]/strong`;
+
+    const rawDividendYield = await extractFrom(this.page, xpath);
+
+    if (!rawDividendYield) {
+      console.warn(`Não foi possível extrair "DIVIDEND YIELD" de ${this.page.url()}`);
+      return null;
+    }
+
+    const dividendYield = rawDividendYield.replace(",", ".");
+
+    return parseFloat(dividendYield);
+  }
+
+  private async getCashValue(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[3]/div/div[2]/span[2]`;
+
+    const rawCashValue = await extractFrom(this.page, xpath);
+
+    if (!rawCashValue) {
+      console.warn(`Não foi possível extrair "VALOR EM CAIXA" de ${this.page.url()}`);
+      return null;
+    }
+
+    const cashValue = rawCashValue
+      .split(" ")
+      .pop()
+      ?.replaceAll(".", "")
+      .replace(",", ".") as string;
+
+    return parseFloat(cashValue);
+  }
+
+  private async getNumberOfShareholders(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[6]/div/div[1]/strong`;
+
+    const rawNumberOfShareholder = await extractFrom(this.page, xpath);
+
+    if (!rawNumberOfShareholder) {
+      console.warn(
+        `Não foi possível extrair "NÚMERO DE COTISTAS" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const numberOfShareholder = rawNumberOfShareholder.replaceAll(".", "");
+
+    return parseFloat(numberOfShareholder);
+  }
+
+  private async getDividendYieldCAGRLast3Years(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[1]/strong`;
+
+    const rawDividendYieldCAGR = await extractFrom(this.page, xpath);
+
+    if (!rawDividendYieldCAGR) {
+      console.warn(
+        `Não foi possível extrair "DY CAGR (3 ANOS)" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const dividendYieldCAGR = rawDividendYieldCAGR.replaceAll(",", ".");
+
+    return parseFloat(dividendYieldCAGR);
+  }
+
+  private async getDividendYieldCAGRLast5Years(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[2]/span[2]`;
+
+    const rawDividendYieldCAGR = await extractFrom(this.page, xpath);
+
+    if (!rawDividendYieldCAGR) {
+      console.warn(
+        `Não foi possível extrair "DY CAGR (5 ANOS)" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const dividendYieldCAGR = rawDividendYieldCAGR.replaceAll(",", ".");
+
+    return parseFloat(dividendYieldCAGR);
+  }
+
+  private async getValueCAGRLast3Years(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[5]/div/div[1]/strong`;
+
+    const rawValueCAGR = await extractFrom(this.page, xpath);
+
+    if (!rawValueCAGR) {
+      console.warn(
+        `Não foi possível extrair "VALOR CAGR (3 ANOS)" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const valueCAGR = rawValueCAGR.replaceAll(",", ".");
+
+    return parseFloat(valueCAGR);
+  }
+
+  private async getValueCAGRLast5Years(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[5]/div/div[5]/div/div[2]/span[2]`;
+
+    const rawValueCAGR = await extractFrom(this.page, xpath);
+
+    if (!rawValueCAGR) {
+      console.warn(
+        `Não foi possível extrair "VALOR CAGR (5 ANOS)" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const valueCAGR = rawValueCAGR.replaceAll(",", ".");
+
+    return parseFloat(valueCAGR);
+  }
+
+  async getRealStateFundIndicators(): Promise<RealStateFundIndicators> {
+    await this.page.goto(`${StatusInvest.BASE_URL}/${this.realStateFundName}`);
+
+    const currentValue = await this.getCurrentValue();
+    const patrimony = await this.getPatrimony();
+    const marketValue = await this.getMarketValue();
+    const dividendYield = await this.getDividendYieldInPercentage();
+    const cashValue = await this.getCashValue();
+    const numberOfShareholders = await this.getNumberOfShareholders();
+    const dividendYieldCAGRLast3Years = await this.getDividendYieldCAGRLast3Years();
+    const dividendYieldCAGRLast5Years = await this.getDividendYieldCAGRLast5Years();
+    const valueCAGRLast3Years = await this.getValueCAGRLast3Years();
+    const valueCAGRLast5Years = await this.getValueCAGRLast5Years();
+
+    return new RealStateFundIndicators(
+      currentValue,
+      patrimony,
+      marketValue,
+      dividendYield,
+      cashValue,
+      numberOfShareholders,
+      dividendYieldCAGRLast3Years,
+      dividendYieldCAGRLast5Years,
+      valueCAGRLast3Years,
+      valueCAGRLast5Years
     );
-    return null;
   }
 
-  const marketValue = rawMarketValue
-    .split(" ")
-    .pop()
-    ?.replaceAll(".", "") as string;
-
-  return parseFloat(marketValue);
 }
 
-async function getDividendYieldInPercentage(
-  page: Page
-): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[1]/div[4]/div/div[1]/strong`;
-
-  const rawDividendYield = await extractFrom(page, xpath);
-
-  if (!rawDividendYield) {
-    console.warn(`Não foi possível extrair "DIVIDEND YIELD" de ${page.url()}`);
-    return null;
-  }
-
-  const dividendYield = rawDividendYield.replace(",", ".");
-
-  return parseFloat(dividendYield);
-}
-
-async function getCashValue(page: Page): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[3]/div/div[2]/span[2]`;
-
-  const rawCashValue = await extractFrom(page, xpath);
-
-  if (!rawCashValue) {
-    console.warn(`Não foi possível extrair "VALOR EM CAIXA" de ${page.url()}`);
-    return null;
-  }
-
-  const cashValue = rawCashValue
-    .split(" ")
-    .pop()
-    ?.replaceAll(".", "")
-    .replace(",", ".") as string;
-
-  return parseFloat(cashValue);
-}
-
-async function getNumberOfShareholders(page: Page): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[6]/div/div[1]/strong`;
-
-  const rawNumberOfShareholder = await extractFrom(page, xpath);
-
-  if (!rawNumberOfShareholder) {
-    console.warn(
-      `Não foi possível extrair "NÚMERO DE COTISTAS" de ${page.url()}`
-    );
-    return null;
-  }
-
-  const numberOfShareholder = rawNumberOfShareholder.replaceAll(".", "");
-
-  return parseFloat(numberOfShareholder);
-}
-
-async function getDividendYieldCAGRLast3Years(
-  page: Page
-): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[1]/strong`;
-
-  const rawDividendYieldCAGR = await extractFrom(page, xpath);
-
-  if (!rawDividendYieldCAGR) {
-    console.warn(
-      `Não foi possível extrair "DY CAGR (3 ANOS)" de ${page.url()}`
-    );
-    return null;
-  }
-
-  const dividendYieldCAGR = rawDividendYieldCAGR.replaceAll(",", ".");
-
-  return parseFloat(dividendYieldCAGR);
-}
-
-async function getDividendYieldCAGRLast5Years(
-  page: Page
-): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[2]/span[2]`;
-
-  const rawDividendYieldCAGR = await extractFrom(page, xpath);
-
-  if (!rawDividendYieldCAGR) {
-    console.warn(
-      `Não foi possível extrair "DY CAGR (5 ANOS)" de ${page.url()}`
-    );
-    return null;
-  }
-
-  const dividendYieldCAGR = rawDividendYieldCAGR.replaceAll(",", ".");
-
-  return parseFloat(dividendYieldCAGR);
-}
-
-async function getValueCAGRLast3Years(page: Page): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[5]/div/div[1]/strong`;
-
-  const rawValueCAGR = await extractFrom(page, xpath);
-
-  if (!rawValueCAGR) {
-    console.warn(
-      `Não foi possível extrair "VALOR CAGR (3 ANOS)" de ${page.url()}`
-    );
-    return null;
-  }
-
-  const valueCAGR = rawValueCAGR.replaceAll(",", ".");
-
-  return parseFloat(valueCAGR);
-}
-
-async function getValueCAGRLast5Years(page: Page): Promise<number | null> {
-  const xpath = `/html/body/main/div[2]/div[5]/div/div[5]/div/div[2]/span[2]`;
-
-  const rawValueCAGR = await extractFrom(page, xpath);
-
-  if (!rawValueCAGR) {
-    console.warn(
-      `Não foi possível extrair "VALOR CAGR (5 ANOS)" de ${page.url()}`
-    );
-    return null;
-  }
-
-  const valueCAGR = rawValueCAGR.replaceAll(",", ".");
-
-  return parseFloat(valueCAGR);
-}
-
-async function getRealStateFundIndicators(
-  page: Page
-): Promise<RealStateFundIndicators> {
-  await page.goto("https://statusinvest.com.br/fundos-imobiliarios/mxrf11");
-
-  const currentValue = await getCurrentValue(page);
-  const patrimony = await getPatrimony(page);
-  const marketValue = await getMarketValue(page);
-  const dividendYield = await getDividendYieldInPercentage(page);
-  const cashValue = await getCashValue(page);
-  const numberOfShareholders = await getNumberOfShareholders(page);
-  const dividendYieldCAGRLast3Years = await getDividendYieldCAGRLast3Years(
-    page
-  );
-  const dividendYieldCAGRLast5Years = await getDividendYieldCAGRLast5Years(
-    page
-  );
-  const valueCAGRLast3Years = await getValueCAGRLast3Years(page);
-  const valueCAGRLast5Years = await getValueCAGRLast5Years(page);
-
-  return new RealStateFundIndicators(
-    currentValue,
-    patrimony,
-    marketValue,
-    dividendYield,
-    cashValue,
-    numberOfShareholders,
-    dividendYieldCAGRLast3Years,
-    dividendYieldCAGRLast5Years,
-    valueCAGRLast3Years,
-    valueCAGRLast5Years
-  );
-}
-
-export { getRealStateFundIndicators };
+export { StatusInvest };

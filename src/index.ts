@@ -1,15 +1,16 @@
 import { launch } from "puppeteer";
-import { getRealStateFundIndicators } from "./status-invest.js";
+import { StatusInvest } from "./status-invest.js";
 
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
 
-const realStateFundIndicators = await getRealStateFundIndicators(page);
+const statusInvest = new StatusInvest("MXRF11", page);
+const indicators = await statusInvest.getRealStateFundIndicators();
 
-console.log(realStateFundIndicators);
-console.log(realStateFundIndicators.getDividendLast12Months());
-console.log(realStateFundIndicators.getNumberOfShares());
-console.log(realStateFundIndicators.getPVP());
-console.log(realStateFundIndicators.getPatrimonyValue());
+console.log(indicators);
+console.log(indicators.getDividendLast12Months());
+console.log(indicators.getNumberOfShares());
+console.log(indicators.getPVP());
+console.log(indicators.getPatrimonyValue());
 
 await browser.close();
