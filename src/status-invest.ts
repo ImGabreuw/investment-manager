@@ -226,6 +226,23 @@ class StatusInvest {
     return parseFloat(averageDailyLiquidity);
   }
 
+  private async getAdministrationFee(): Promise<string | null> {
+    const xpath = `//*[@id="main-2"]/div[2]/div[6]/div/div/div[2]/div/div/div/strong`;
+
+    const rawAdministrationFee = await extractFrom(this.page, xpath);
+
+    if (!rawAdministrationFee) {
+      console.warn(
+        `Não foi possível extrair "TAXA ADMINISTRAÇÃO" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const administrationFee = rawAdministrationFee.trim();
+
+    return administrationFee;
+  }
+
   private async getParticipationInIFIXInPercentage(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[6]/div/div/div[4]/div/a/div/div/strong`;
 
@@ -263,6 +280,7 @@ class StatusInvest {
     const averageDailyLiquidityLast30Days =
       await this.getAverageDailyLiquidityLast30Days();
     const participationInIFIX = await this.getParticipationInIFIXInPercentage();
+    const administrationFee = await this.getAdministrationFee();
 
     return new RealStateFundIndicators(
       currentValue,
@@ -277,6 +295,7 @@ class StatusInvest {
       valueCAGRLast5Years,
       averageMonthlyYieldLast24Months,
       averageDailyLiquidityLast30Days,
+      administrationFee,
       participationInIFIX
     );
   }
