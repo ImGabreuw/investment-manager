@@ -16,7 +16,8 @@ export class RealStateFundIndicators {
     readonly valueCAGRLast3Years: number | null,
     readonly valueCAGRLast5Years: number | null,
     readonly averageMonthlyYieldLast24Months: number | null,
-    readonly averageDailyLiquidityLast30Days: number | null
+    readonly averageDailyLiquidityLast30Days: number | null,
+    readonly participationInIFIX: number | null
   ) {
     this.dividendLast12Months = this.getDividendLast12Months();
     this.numberOfShares = this.getNumberOfShares();

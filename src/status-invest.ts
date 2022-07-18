@@ -226,6 +226,23 @@ class StatusInvest {
     return parseFloat(averageDailyLiquidity);
   }
 
+  private async getParticipationInIFIXInPercentage(): Promise<number | null> {
+    const xpath = `/html/body/main/div[2]/div[6]/div/div/div[4]/div/a/div/div/strong`;
+
+    const rawParticipationInIFIX = await extractFrom(this.page, xpath);
+
+    if (!rawParticipationInIFIX) {
+      console.warn(
+        `Não foi possível extrair "PARTICIPAÇÃO NO IFIX" de ${this.page.url()}`
+      );
+      return null;
+    }
+
+    const participationInIFIX = rawParticipationInIFIX.replace(",", ".");
+
+    return parseFloat(participationInIFIX);
+  }
+
   async getRealStateFundIndicators(): Promise<RealStateFundIndicators> {
     await this.page.goto(`${StatusInvest.BASE_URL}/${this.realStateFundName}`);
 
@@ -245,6 +262,7 @@ class StatusInvest {
       await this.getAverageMonthlyYieldLast24Months();
     const averageDailyLiquidityLast30Days =
       await this.getAverageDailyLiquidityLast30Days();
+    const participationInIFIX = await this.getParticipationInIFIXInPercentage();
 
     return new RealStateFundIndicators(
       currentValue,
@@ -258,7 +276,8 @@ class StatusInvest {
       valueCAGRLast3Years,
       valueCAGRLast5Years,
       averageMonthlyYieldLast24Months,
-      averageDailyLiquidityLast30Days
+      averageDailyLiquidityLast30Days,
+      participationInIFIX
     );
   }
 }
