@@ -79,6 +79,21 @@ async function getCashValue(page: Page): Promise<number | null> {
   return parseFloat(cashValue);
 }
 
+async function getNumberOfShareholders(page: Page): Promise<number | null> {
+  const xpath = `/html/body/main/div[2]/div[5]/div/div[6]/div/div[1]/strong`;
+
+  const rawNumberOfShareholder = await extractFrom(page, xpath);
+
+  if (!rawNumberOfShareholder) {
+    console.warn(`Não foi possível extrair "NÚMERO DE COTISTAS" de ${page.url()}`);
+    return null;
+  }
+
+  const numberOfShareholder = rawNumberOfShareholder.replaceAll(".", "");
+
+  return parseFloat(numberOfShareholder);
+}
+
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
 
@@ -99,5 +114,9 @@ console.log(typeof dividendYield);
 const cashValue = await getCashValue(page);
 console.log(cashValue);
 console.log(typeof cashValue);
+
+const numberOfShareholders = await getNumberOfShareholders(page);
+console.log(numberOfShareholders);
+console.log(typeof numberOfShareholders);
 
 await browser.close();
