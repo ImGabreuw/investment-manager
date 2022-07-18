@@ -43,6 +43,24 @@ async function getPatrimony(page: Page): Promise<number | null> {
   return parseFloat(patrimony);
 }
 
+async function getMarketValue(page: Page): Promise<number | null> {
+  const xpath = `/html/body/main/div[2]/div[5]/div/div[2]/div/div[2]/span[2]`;
+
+  const rawMarketValue = await extractFrom(page, xpath);
+
+  if (!rawMarketValue) {
+    console.warn(`Não foi possível extrair "VALOR DE MERCADO" de ${page.url()}`);
+    return null;
+  }
+
+  const marketValue = rawMarketValue
+    .split(" ")
+    .pop()
+    ?.replaceAll(".", "") as string;
+
+  return parseFloat(marketValue);
+}
+
 async function getDividendYieldInPercentage(
   page: Page
 ): Promise<number | null> {
@@ -106,6 +124,10 @@ console.log(typeof currentValue);
 const patrimony = await getPatrimony(page);
 console.log(patrimony);
 console.log(typeof patrimony);
+
+const marketValue = await getMarketValue(page);
+console.log(marketValue);
+console.log(typeof marketValue);
 
 const dividendYield = await getDividendYieldInPercentage(page);
 console.log(dividendYield);
