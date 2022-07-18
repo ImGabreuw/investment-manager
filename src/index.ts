@@ -135,6 +135,25 @@ async function getDividendYieldCAGRLast3Years(
   return parseFloat(dividendYieldCAGR);
 }
 
+async function getDividendYieldCAGRLast5Years(
+  page: Page
+): Promise<number | null> {
+  const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[2]/span[2]`;
+
+  const rawDividendYieldCAGR = await extractFrom(page, xpath);
+
+  if (!rawDividendYieldCAGR) {
+    console.warn(
+      `Não foi possível extrair "DY CAGR (5 ANOS)" de ${page.url()}`
+    );
+    return null;
+  }
+
+  const dividendYieldCAGR = rawDividendYieldCAGR.replaceAll(",", ".");
+
+  return parseFloat(dividendYieldCAGR);
+}
+
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
 
@@ -164,8 +183,12 @@ const numberOfShareholders = await getNumberOfShareholders(page);
 console.log(numberOfShareholders);
 console.log(typeof numberOfShareholders);
 
-const dividendYieldCAGR = await getDividendYieldCAGRLast3Years(page);
-console.log(dividendYieldCAGR);
-console.log(typeof dividendYieldCAGR);
+const dividendYieldCAGRLast3Years = await getDividendYieldCAGRLast3Years(page);
+console.log(dividendYieldCAGRLast3Years);
+console.log(typeof dividendYieldCAGRLast3Years);
+
+const dividendYieldCAGRLast5Years = await getDividendYieldCAGRLast5Years(page);
+console.log(dividendYieldCAGRLast5Years);
+console.log(typeof dividendYieldCAGRLast5Years);
 
 await browser.close();
