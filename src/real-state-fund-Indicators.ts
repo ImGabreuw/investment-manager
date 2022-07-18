@@ -1,5 +1,3 @@
-import { parse } from "node:path/win32";
-
 export class RealStateFundIndicators {
   constructor(
     public readonly currentValue: number | null,
