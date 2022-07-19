@@ -226,7 +226,7 @@ class StatusInvest {
     return parseFloat(averageDailyLiquidity);
   }
 
-  private async getAdministrationFee(): Promise<string | null> {
+  private async getAdministrationFee(): Promise<number | null> {
     const xpath = `//*[@id="main-2"]/div[2]/div[6]/div/div/div[2]/div/div/div/strong`;
 
     const rawAdministrationFee = await extractFrom(this.page, xpath);
@@ -238,9 +238,13 @@ class StatusInvest {
       return null;
     }
 
-    const administrationFee = rawAdministrationFee.trim();
+    const administrationFee = rawAdministrationFee.split(" ")[0];
 
-    return administrationFee;
+    if (administrationFee === "-") {
+      return 0;
+    }
+
+    return parseFloat(administrationFee);
   }
 
   private async getParticipationInIFIXInPercentage(): Promise<number | null> {
