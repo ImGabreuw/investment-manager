@@ -39,6 +39,30 @@ class Criterion {
     return value >= 500_000_000;
   }
 
+  dividendYield(value: number): boolean {
+    return value >= 7;
+  }
+
+  numberOfShareholders(value: number): boolean {
+    return value > 50_000;
+  }
+
+  dividendYieldCAGRLast3Years(value: number): boolean {
+    return value > 0;
+  }
+
+  dividendYieldCAGRLast5Years(value: number): boolean {
+    return value > 0;
+  }
+
+  valueCAGRLast3Years(value: number): boolean {
+    return value > 0;
+  }
+
+  valueCAGRLast5Years(value: number): boolean {
+    return value > 0;
+  }
+
   pVP(value: number): boolean {
     return value <= 1;
   }
