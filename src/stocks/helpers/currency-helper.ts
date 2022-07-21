@@ -1,9 +1,7 @@
-import { LocaleHelper } from "./locale-helper";
-
 class CurrencyHelper {
   static format(
     value: number | null,
-    locale: string = LocaleHelper.getUserLocale(),
+    locale: string = "pt-br",
     currency: string = "BRL"
   ): string {
     if (value === null) {
