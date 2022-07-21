@@ -1,6 +1,6 @@
 import { CurrencyHelper } from "../helpers/currency-helper";
 
-class StockPrice {
+class StockPriceHistory {
   constructor(
     readonly current: number | null,
     readonly minIn1Year: number | null,
@@ -30,4 +30,4 @@ class StockPrice {
   }
 }
 
-export { StockPrice };
+export { StockPriceHistory };
