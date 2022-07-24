@@ -30,6 +30,16 @@ class NumberHelper {
   static removeNumberFormat(text: string): string {
     return text.trim().replaceAll(".", "").replace(",", ".");
   }
+
+  static removePercentSymbol(text: string): string {
+    return text.replace("%", "").trim();
+  }
+
+  static isNotNumber(text: string): boolean {
+    const number = Number(text);
+
+    return !number;
+  }
 }
 
 export { NumberHelper };
