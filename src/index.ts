@@ -1,11 +1,7 @@
 import { launch } from "puppeteer";
 import { CriterionValidation } from "./criterion.js";
 import { StatusInvest } from "./status-invest.js";
-import {
-  fullXpath,
-  removeBrazilianCurrencySymbol,
-} from "./stocks/api/stock-status-invest.js";
-import { extractTextFrom } from "./stocks/helpers/puppeteer-helper.js";
+import { StatusInvestStockAPI } from "./stocks/api/status-invest-stock-api.js";
 
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
@@ -25,12 +21,10 @@ async function realStateFundTest() {
 }
 
 async function stockTest() {
-  page.goto("https://statusinvest.com.br/acoes/taee11");
+  const statusInvest = new StatusInvestStockAPI(page);
 
-  const stockMinPrice = await extractTextFrom(page, fullXpath["MIN. MÊS"]);
-  const formattedStockMinPrice = removeBrazilianCurrencySymbol(
-    stockMinPrice || ""
-  );
+  await statusInvest.search("TAEE11");
+  const result = await statusInvest.extractData();
 
-  console.log(formattedStockMinPrice);
+  console.log(result);
 }
