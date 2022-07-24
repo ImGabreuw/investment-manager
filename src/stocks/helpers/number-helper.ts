@@ -26,6 +26,10 @@ class NumberHelper {
       maximumFractionDigits: 2,
     });
   }
+
+  static removeNumberFormat(text: string): string {
+    return text.trim().replaceAll(".", "").replace(",", ".");
+  }
 }
 
 export { NumberHelper };
