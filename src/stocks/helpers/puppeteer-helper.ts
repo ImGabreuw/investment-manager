@@ -1,13 +1,23 @@
 import { Page } from "puppeteer";
 
-async function extractTextFrom(page: Page, xpath: string): Promise<string | null> {
-  await page.waitForXPath(xpath);
+class PuppeteerHelper {
+  private constructor() {}
 
-  const elementHandle = await page.$x(xpath);
+  static async extractTextFrom(
+    page: Page,
+    xpath: string
+  ): Promise<string | null> {
+    await page.waitForXPath(xpath);
 
-  const text = await page.evaluate((tag) => tag.textContent, elementHandle[0]);
+    const elementHandle = await page.$x(xpath);
 
-  return text;
+    const text = await page.evaluate(
+      (tag) => tag.textContent,
+      elementHandle[0]
+    );
+
+    return text;
+  }
 }
 
-export { extractTextFrom };
+export { PuppeteerHelper };
