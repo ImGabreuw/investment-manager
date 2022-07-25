@@ -5,6 +5,7 @@ import { StatusInvestStockAPI } from "./stocks/api/status-invest-stock-api.js";
 
 const browser = await launch({ headless: false });
 const page = await browser.newPage();
+page.setViewport({ width: 1200, height: 1000 });
 
 // await realStateFundTest();
 await stockTest();
@@ -24,7 +25,7 @@ async function stockTest() {
   const statusInvest = new StatusInvestStockAPI(page);
 
   await statusInvest.search("TAEE11");
-  const result = await statusInvest.extractData();
+  const result = await statusInvest.extract();
 
   console.log(result);
 }

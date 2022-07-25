@@ -1,4 +1,4 @@
-import { Page } from "puppeteer";
+import { MouseButton, Page } from "puppeteer";
 
 class PuppeteerHelper {
   private constructor() {}
@@ -18,6 +18,13 @@ class PuppeteerHelper {
 
     return text;
   }
+
+  static async click(page: Page, selector: string, buttonAction: string): Promise<void> {
+    await page.waitForSelector(selector);
+
+    await page.click(selector, { button: buttonAction as MouseButton });
+  }
+
 }
 
 export { PuppeteerHelper };

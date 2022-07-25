@@ -1,96 +1,46 @@
 import { Page } from "puppeteer";
+import { STEPS } from "../config/status-invest/steps-config.js";
+import { FULL_XPATH } from "../config/status-invest/xpath-config.js";
 import { CurrencyHelper } from "../helpers/currency-helper.js";
 import { NumberHelper } from "../helpers/number-helper.js";
 import { PuppeteerHelper } from "../helpers/puppeteer-helper.js";
 import { StatusInvestStockDTO } from "./dto/status-invest-stock-dto.js";
 
-const FULL_XPATH = {
-  /*
-  Resumo
-  */
-  "VALOR ATUAL": `/html/body/main/div[2]/div/div[1]/div/div[1]/div/div[1]/strong`,
-  "MIN. 52 SEMANAS": `/html/body/main/div[2]/div/div[1]/div/div[2]/div/div[1]/strong`,
-  "MIN. MÊS": `/html/body/main/div[2]/div/div[1]/div/div[2]/div/div[2]/div/span[2]`,
-  "MÁX. 52 SEMANAS": `/html/body/main/div[2]/div/div[1]/div/div[3]/div/div[1]/strong`,
-  "MÁX. MÊS": `/html/body/main/div[2]/div/div[1]/div/div[3]/div/div[2]/div/span[2]`,
-  "DIVIDEND YIELD": `/html/body/main/div[2]/div/div[1]/div/div[4]/div/div[1]/strong`,
-  "ÚLTIMOS 12 MESES": `/html/body/main/div[2]/div/div[1]/div/div[4]/div/div[2]/div/span[2]`,
-  "VALORIZAÇÃO (12M)": `/html/body/main/div[2]/div/div[1]/div/div[5]/div/div[1]/strong`,
-  "MÊS ATUAL": `/html/body/main/div[2]/div/div[1]/div/div[5]/div/div[2]/div/span[2]/b`,
-  /*
-  Indicadores de negociação
-  */
-  "TIPO AÇÃO": `/html/body/main/div[2]/div/div[5]/div/div/div[1]/div/div/h3/strong`,
-  "TAG ALONG": `/html/body/main/div[2]/div/div[5]/div/div/div[2]/div/div/div/strong`,
-  "LIQ. MÉD. DIÁRIA": `/html/body/main/div[2]/div/div[5]/div/div/div[3]/div/div/div/strong`,
-  "PARTICIPAÇÃO NO IBOV": `/html/body/main/div[2]/div/div[5]/div/div/div[4]/div/a/div/div/strong`,
-  /*
-  Indicadores de valuation
-  */
-  "P/L": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[2]/div/div/strong`,
-  "PEG Ratio": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[3]/div/div/strong`,
-  "P/VP": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[4]/div/div/strong`,
-  "EV/EBITDA": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[5]/div/div/strong`,
-  "EV/EBIT": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[6]/div/div/strong`,
-  "P/EBITDA": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[7]/div/div/strong`,
-  "P/EBIT": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[8]/div/div/strong`,
-  VPA: `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[9]/div/div/strong`,
-  "P/Ativo": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[10]/div/div/strong`,
-  LPA: `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[11]/div/div/strong`,
-  "P/SR": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[12]/div/div/strong`,
-  "P/Cap. Giro": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[13]/div/div/strong`,
-  "P/Ativo Circ. Liq.": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[14]/div/div/strong`,
-  /*
-  Indicadores de endividamento
-  */
-  "Dív. líquida/PL": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[2]/div/div[1]/div/div/strong`,
-  "Dív. líquida/EBITDA": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[2]/div/div[2]/div/div/strong`,
-  "Dív. líquida/EBIT": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[2]/div/div[3]/div/div/strong`,
-  "PL/Ativos": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[2]/div/div[4]/div/div/strong`,
-  "Passivos/Ativos": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[2]/div/div[5]/div/div/strong`,
-  "Liq. corrente": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[2]/div/div[6]/div/div/strong`,
-  /*
-  Indicadores de eficiência
-  */
-  "M. Bruta": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[3]/div/div[1]/div/div/strong`,
-  "M. EBITDA": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[3]/div/div[2]/div/div/strong`,
-  "M. EBIT": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[3]/div/div[3]/div/div/strong`,
-  "M. Líquida": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[3]/div/div[4]/div/div/strong`,
-  /*
-  Indicadores de rentabilidade
-  */
-  ROE: `/html/body/main/div[2]/div/div[7]/div[2]/div/div[4]/div/div[1]/div/div/strong`,
-  ROA: `/html/body/main/div[2]/div/div[7]/div[2]/div/div[4]/div/div[2]/div/div/strong`,
-  ROIC: `/html/body/main/div[2]/div/div[7]/div[2]/div/div[4]/div/div[3]/div/div/strong`,
-  "Giro ativos": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[4]/div/div[4]/div/div/strong`,
-  /*
-  Indicadores de crescimento
-  */
-  "CAGR Receitas 5 anos": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[5]/div/div[1]/div/div/strong`,
-  "CAGR Lucros 5 anos": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[5]/div/div[2]/div/div/strong`,
-};
-
 const BASE_URL = "https://statusinvest.com.br/acoes";
+
+type StepFunction = (args?: any[]) => Promise<void>;
 
 class StatusInvestStockAPI {
   constructor(private readonly page: Page) {}
 
-  async search(stockName: string) {
+  async search(stockName: string): Promise<void> {
     await this.page.goto(`${BASE_URL}/${stockName}`);
   }
 
-  async extractData(): Promise<StatusInvestStockDTO> {
+  async execute(...steps: StepFunction[]) {
+    for (const step of steps) {
+      await step();
+    }
+  }
+
+  async extract(): Promise<StatusInvestStockDTO> {
     const dto = Object.create(new StatusInvestStockDTO());
 
-    for (const indicatorName of Object.getOwnPropertyNames(FULL_XPATH)) {
-      const indicatorXPATH = eval(`FULL_XPATH["${indicatorName}"]`);
+    for (const sectionName of Object.keys(FULL_XPATH)) {
+      const section = eval(`FULL_XPATH["${sectionName}"]`);
 
-      const indicator = await PuppeteerHelper.extractTextFrom(
-        this.page,
-        indicatorXPATH
-      );
+      for (const indicatorName of Object.keys(section)) {
+        const indicatorXpath = eval(
+          `FULL_XPATH["${sectionName}"]["${indicatorName}"]`
+        );
 
-      dto[indicatorName] = this.normalizeAndConvert(indicator);
+        const indicator = await PuppeteerHelper.extractTextFrom(
+          this.page,
+          indicatorXpath
+        );
+
+        dto[indicatorName] = this.normalizeAndConvert(indicator);
+      }
     }
 
     return dto;
@@ -110,6 +60,33 @@ class StatusInvestStockAPI {
     }
 
     return Number(Number(text).toFixed(3));
+  }
+
+  private separateIndicatorByExtractionLogic(): [string[], string[]] {
+    const indicatorsWithSteps = [];
+    const indicatorsWithoutSteps = [];
+
+    for (const indicatorSectionName of Object.getOwnPropertyNames(FULL_XPATH)) {
+      const hasStepsToExecute = Object.getOwnPropertyNames(STEPS).includes(
+        indicatorSectionName.toUpperCase()
+      );
+
+      if (hasStepsToExecute) {
+        indicatorsWithSteps.push(indicatorSectionName);
+      } else {
+        indicatorsWithoutSteps.push(indicatorSectionName);
+      }
+    }
+
+    return [indicatorsWithSteps, indicatorsWithoutSteps];
+  }
+
+  private getClickTypeFromText(text: string): string {
+    const clickType = text.split("_")[0];
+
+    if (clickType !== "left" && clickType !== "right") return "left";
+
+    return clickType;
   }
 }
 

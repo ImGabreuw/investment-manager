@@ -62,6 +62,29 @@ class StatusInvestStockDTO {
   */
   readonly "CAGR Receitas 5 anos": number;
   readonly "CAGR Lucros 5 anos": number;
+  /*
+  Payout
+  */
+  readonly "PAYOUT MÉDIA": number;
+  readonly "PAYOUT ATUAL": number;
+  readonly "PAYOUT MENOR VALOR": number;
+  readonly "PAYOUT MAIOR VALOR": number;
+  /*
+  Informações da empresa
+  */
+  readonly "NOME DA EMPRESA": string
+  readonly "PATRIMÔNIO LÍQUIDO": number
+  readonly "ATIVOS": number
+  readonly "ATIVO CIRCULANTE": number
+  readonly "DÍVIDA BRUTA": number
+  readonly "VALOR DE MERCADO": number
+  readonly "VALOR DE FIRMA": number
+  readonly "Nº TOTAL DE PAPÉIS": number
+  readonly "SEGMENTO DE LISTAGEM": string
+  readonly "FREE FLOAT": number
+  readonly "SETOR DE ATUAÇÃO": string
+  readonly "SUBSETOR DE ATUAÇÃO": string
+  readonly "SEGMENTO DE ATUAÇÃO": string
 
   constructor() {}
 }
