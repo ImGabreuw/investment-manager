@@ -17,17 +17,15 @@ class StatusInvestStockAPI {
     await this.page.goto(`${BASE_URL}/${stockName}`);
   }
 
-  async execute(...steps: StepFunction[]) {
-    for (const step of steps) {
-      await step();
-    }
-  }
-
   async extract(): Promise<StatusInvestStockDTO> {
     const dto = Object.create(new StatusInvestStockDTO());
 
     for (const sectionName of Object.keys(FULL_XPATH)) {
       const section = eval(`FULL_XPATH["${sectionName}"]`);
+
+      if (this.hasSteps(sectionName)) {
+        await this.executeSteps(sectionName);
+      }
 
       for (const indicatorName of Object.keys(section)) {
         const indicatorXpath = eval(
@@ -62,23 +60,24 @@ class StatusInvestStockAPI {
     return Number(Number(text).toFixed(3));
   }
 
-  private separateIndicatorByExtractionLogic(): [string[], string[]] {
-    const indicatorsWithSteps = [];
-    const indicatorsWithoutSteps = [];
+  private hasSteps(sectionName: string): boolean {
+    return Object.keys(STEPS).includes(sectionName);
+  }
 
-    for (const indicatorSectionName of Object.getOwnPropertyNames(FULL_XPATH)) {
-      const hasStepsToExecute = Object.getOwnPropertyNames(STEPS).includes(
-        indicatorSectionName.toUpperCase()
+  private async executeSteps(sectionName: string): Promise<void> {
+    const stepSection = eval(`STEPS["${sectionName}"]`);
+
+    for (const stepName of Object.keys(stepSection)) {
+      const { action, selector } = eval(
+        `STEPS["${sectionName}"]["${stepName}"]`
       );
 
-      if (hasStepsToExecute) {
-        indicatorsWithSteps.push(indicatorSectionName);
-      } else {
-        indicatorsWithoutSteps.push(indicatorSectionName);
-      }
+      await PuppeteerHelper.click(
+        this.page,
+        selector,
+        this.getClickTypeFromText(action)
+      );
     }
-
-    return [indicatorsWithSteps, indicatorsWithoutSteps];
   }
 
   private getClickTypeFromText(text: string): string {
