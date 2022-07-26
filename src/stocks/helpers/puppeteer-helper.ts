@@ -19,12 +19,17 @@ class PuppeteerHelper {
     return text;
   }
 
-  static async click(page: Page, selector: string, buttonAction: string): Promise<void> {
-    await page.waitForSelector(selector);
-
-    await page.click(selector, { button: buttonAction as MouseButton });
+  static async click(
+    page: Page,
+    selector: string,
+    buttonAction: string
+  ): Promise<void> {
+    await Promise.all([
+      page.waitForSelector(selector),
+      page.click(selector, { button: buttonAction as MouseButton }),
+      page.waitForTimeout(1_000),
+    ]);
   }
-
 }
 
 export { PuppeteerHelper };
