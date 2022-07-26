@@ -1,8 +1,8 @@
 import { Page } from "puppeteer";
 import { FULL_XPATH } from "../config/status-invest/xpath-config.js";
-import { CurrencyHelper } from "../helpers/currency-helper.js";
-import { NumberHelper } from "../helpers/number-helper.js";
-import { PuppeteerHelper } from "../helpers/puppeteer-helper.js";
+import { CurrencyHelper } from "../../helpers/currency-helper.js";
+import { NumberHelper } from "../../helpers/number-helper.js";
+import { PuppeteerHelper } from "../../helpers/puppeteer-helper.js";
 import { StepsService } from "../service/steps-service.js";
 import { StatusInvestStockDTO } from "./dto/status-invest-stock-dto.js";
 

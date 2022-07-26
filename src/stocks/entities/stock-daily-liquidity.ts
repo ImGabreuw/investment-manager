@@ -1,5 +1,5 @@
-import { CurrencyHelper } from "../helpers/currency-helper";
-import { NumberHelper } from "../helpers/number-helper";
+import { CurrencyHelper } from "../../helpers/currency-helper";
+import { NumberHelper } from "../../helpers/number-helper";
 
 class StockDailyLiquidityLast30Days {
   constructor(

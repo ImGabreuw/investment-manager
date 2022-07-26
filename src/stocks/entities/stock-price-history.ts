@@ -1,4 +1,4 @@
-import { CurrencyHelper } from "../helpers/currency-helper";
+import { CurrencyHelper } from "../../helpers/currency-helper";
 
 class StockPriceHistory {
   constructor(

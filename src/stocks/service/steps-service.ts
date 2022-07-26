@@ -1,6 +1,6 @@
 import { Page } from "puppeteer";
-import { STEPS } from "../config/status-invest/steps-config";
-import { PuppeteerHelper } from "../helpers/puppeteer-helper";
+import { PuppeteerHelper } from "../../helpers/puppeteer-helper.js";
+import { STEPS } from "../config/status-invest/steps-config.js";
 
 class StepsService {
   constructor(readonly page: Page) {}
