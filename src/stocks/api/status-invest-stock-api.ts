@@ -8,8 +8,6 @@ import { StatusInvestStockDTO } from "./dto/status-invest-stock-dto.js";
 
 const BASE_URL = "https://statusinvest.com.br/acoes";
 
-type StepFunction = (args?: any[]) => Promise<void>;
-
 class StatusInvestStockAPI {
   constructor(private readonly page: Page) {}
 
