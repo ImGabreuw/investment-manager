@@ -7,7 +7,7 @@ import { PriceIndicator } from "./indicators/price-indicator";
 import { RentabilityIndicator } from "./indicators/rentability-indicator";
 import { ValorizationIndicator } from "./indicators/valorization-indicator";
 import { ValuationIndicator } from "./indicators/valuation-indicator";
-import { InterpreseInfo } from "./interprese-info";
+import { InterpreseInfo } from "./indicators/interprese-info";
 
 class Stock {
   constructor(

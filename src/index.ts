@@ -2,6 +2,7 @@ import { launch } from "puppeteer";
 import { CriterionValidation } from "./criterion.js";
 import { StatusInvest } from "./status-invest.js";
 import { StatusInvestStockAPI } from "./stocks/api/status-invest-stock-api.js";
+import { StatusInvestMapper } from "./stocks/config/mapper/status-invest-mapper.js";
 import { StepsService } from "./stocks/service/steps-service.js";
 
 const browser = await launch({ headless: false });
@@ -27,7 +28,7 @@ async function stockTest() {
   const statusInvest = new StatusInvestStockAPI(page, stepsService);
 
   await statusInvest.search("TAEE11");
-  const result = await statusInvest.extract();
+  const dto = await statusInvest.extract();
 
-  console.log(result);
+  console.log(await StatusInvestMapper.map(dto));
 }

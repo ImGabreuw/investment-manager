@@ -71,7 +71,9 @@ class StatusInvestStockDTO {
   readonly "PAYOUT MÉDIA": number;
   readonly "PAYOUT ATUAL": number;
   readonly "PAYOUT MENOR VALOR": number;
+  readonly "PAYOUT ANO MENOR VALOR": number;
   readonly "PAYOUT MAIOR VALOR": number;
+  readonly "PAYOUT ANO MAIOR VALOR": number;
   /*
   Informações da empresa
   */
