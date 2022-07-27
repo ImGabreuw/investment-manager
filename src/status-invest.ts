@@ -1,6 +1,6 @@
 import { Page } from "puppeteer";
+import { PuppeteerHelper } from "./helpers/puppeteer-helper.js";
 import { RealStateFundIndicators } from "./real-state-fund-Indicators.js";
-import { extractFrom } from "./utils.js";
 
 class StatusInvest {
   static readonly BASE_URL = "https://statusinvest.com.br/fundos-imobiliarios";
@@ -13,7 +13,7 @@ class StatusInvest {
   private async getCurrentValue(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[1]/div[1]/div/div[1]/strong`;
 
-    const rawCurrentValue = await extractFrom(this.page, xpath);
+    const rawCurrentValue = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawCurrentValue) {
       console.warn(
@@ -30,7 +30,7 @@ class StatusInvest {
   private async getPatrimony(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[1]/div/div[2]/span[2]`;
 
-    const rawPatrimony = await extractFrom(this.page, xpath);
+    const rawPatrimony = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawPatrimony) {
       console.warn(
@@ -50,7 +50,7 @@ class StatusInvest {
   private async getMarketValue(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[2]/div/div[2]/span[2]`;
 
-    const rawMarketValue = await extractFrom(this.page, xpath);
+    const rawMarketValue = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawMarketValue) {
       console.warn(
@@ -70,7 +70,7 @@ class StatusInvest {
   private async getDividendYieldInPercentage(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[1]/div[4]/div/div[1]/strong`;
 
-    const rawDividendYield = await extractFrom(this.page, xpath);
+    const rawDividendYield = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawDividendYield) {
       console.warn(
@@ -87,7 +87,7 @@ class StatusInvest {
   private async getCashValue(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[3]/div/div[2]/span[2]`;
 
-    const rawCashValue = await extractFrom(this.page, xpath);
+    const rawCashValue = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawCashValue) {
       console.warn(
@@ -108,7 +108,7 @@ class StatusInvest {
   private async getNumberOfShareholders(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[6]/div/div[1]/strong`;
 
-    const rawNumberOfShareholder = await extractFrom(this.page, xpath);
+    const rawNumberOfShareholder = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawNumberOfShareholder) {
       console.warn(
@@ -125,7 +125,7 @@ class StatusInvest {
   private async getDividendYieldCAGRLast3Years(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[1]/strong`;
 
-    const rawDividendYieldCAGR = await extractFrom(this.page, xpath);
+    const rawDividendYieldCAGR = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawDividendYieldCAGR) {
       console.warn(
@@ -142,7 +142,7 @@ class StatusInvest {
   private async getDividendYieldCAGRLast5Years(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[4]/div/div[2]/span[2]`;
 
-    const rawDividendYieldCAGR = await extractFrom(this.page, xpath);
+    const rawDividendYieldCAGR = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawDividendYieldCAGR) {
       console.warn(
@@ -159,7 +159,7 @@ class StatusInvest {
   private async getValueCAGRLast3Years(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[5]/div/div[1]/strong`;
 
-    const rawValueCAGR = await extractFrom(this.page, xpath);
+    const rawValueCAGR = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawValueCAGR) {
       console.warn(
@@ -176,7 +176,7 @@ class StatusInvest {
   private async getValueCAGRLast5Years(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[5]/div/div[5]/div/div[2]/span[2]`;
 
-    const rawValueCAGR = await extractFrom(this.page, xpath);
+    const rawValueCAGR = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawValueCAGR) {
       console.warn(
@@ -193,7 +193,7 @@ class StatusInvest {
   private async getAverageMonthlyYieldLast24Months(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[6]/div/div/div[1]/div/div/strong`;
 
-    const rawAverageMonthlyYield = await extractFrom(this.page, xpath);
+    const rawAverageMonthlyYield = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawAverageMonthlyYield) {
       console.warn(
@@ -210,7 +210,7 @@ class StatusInvest {
   private async getAverageDailyLiquidityLast30Days(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[6]/div/div/div[3]/div/div/div/strong`;
 
-    const rawAverageDailyLiquidity = await extractFrom(this.page, xpath);
+    const rawAverageDailyLiquidity = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawAverageDailyLiquidity) {
       console.warn(
@@ -229,7 +229,7 @@ class StatusInvest {
   private async getAdministrationFee(): Promise<number | null> {
     const xpath = `//*[@id="main-2"]/div[2]/div[6]/div/div/div[2]/div/div/div/strong`;
 
-    const rawAdministrationFee = await extractFrom(this.page, xpath);
+    const rawAdministrationFee = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawAdministrationFee) {
       console.warn(
@@ -250,7 +250,7 @@ class StatusInvest {
   private async getParticipationInIFIXInPercentage(): Promise<number | null> {
     const xpath = `/html/body/main/div[2]/div[6]/div/div/div[4]/div/a/div/div/strong`;
 
-    const rawParticipationInIFIX = await extractFrom(this.page, xpath);
+    const rawParticipationInIFIX = await PuppeteerHelper.extractTextFrom(this.page, xpath);
 
     if (!rawParticipationInIFIX) {
       console.warn(

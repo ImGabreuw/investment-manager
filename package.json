@@ -1,7 +1,7 @@
 {
-  "name": "investment-manager",
+  "name": "investment-manager-gateway",
   "version": "1.0.0",
-  "description": "application to help people organize their investments",
+  "description": "application to broker, in a simplified way, stock and real state fund information from Status Invest, Suno, etc",
   "main": "./src/index.ts",
   "type": "module",
   "scripts": {

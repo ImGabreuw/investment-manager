@@ -1,14 +1,12 @@
 class StatusInvestStockDTO {
   /*
-  Resumo
+  Indicadores de preço
   */
   readonly "VALOR ATUAL": number;
   readonly "MIN. 52 SEMANAS": number;
   readonly "MIN. MÊS": number;
   readonly "MÁX. 52 SEMANAS": number;
   readonly "MÁX. MÊS": number;
-  readonly "DIVIDEND YIELD": number;
-  readonly "ÚLTIMOS 12 MESES": number;
   readonly "VALORIZAÇÃO (12M)": number;
   readonly "MÊS ATUAL": number;
   /*
@@ -21,6 +19,8 @@ class StatusInvestStockDTO {
   /*
   Indicadores de valuation
   */
+  readonly "DIVIDEND YIELD": number;
+  readonly "ÚLTIMOS 12 MESES": number;
   readonly "P/L": number;
   readonly "PEG Ratio": number;
   readonly "P/VP": number;
@@ -72,19 +72,19 @@ class StatusInvestStockDTO {
   /*
   Informações da empresa
   */
-  readonly "NOME DA EMPRESA": string
-  readonly "PATRIMÔNIO LÍQUIDO": number
-  readonly "ATIVOS": number
-  readonly "ATIVO CIRCULANTE": number
-  readonly "DÍVIDA BRUTA": number
-  readonly "VALOR DE MERCADO": number
-  readonly "VALOR DE FIRMA": number
-  readonly "Nº TOTAL DE PAPÉIS": number
-  readonly "SEGMENTO DE LISTAGEM": string
-  readonly "FREE FLOAT": number
-  readonly "SETOR DE ATUAÇÃO": string
-  readonly "SUBSETOR DE ATUAÇÃO": string
-  readonly "SEGMENTO DE ATUAÇÃO": string
+  readonly "NOME DA EMPRESA": string;
+  readonly "PATRIMÔNIO LÍQUIDO": number;
+  readonly "ATIVOS": number;
+  readonly "ATIVO CIRCULANTE": number;
+  readonly "DÍVIDA BRUTA": number;
+  readonly "VALOR DE MERCADO": number;
+  readonly "VALOR DE FIRMA": number;
+  readonly "Nº TOTAL DE PAPÉIS": number;
+  readonly "SEGMENTO DE LISTAGEM": string;
+  readonly "FREE FLOAT": number;
+  readonly "SETOR DE ATUAÇÃO": string;
+  readonly "SUBSETOR DE ATUAÇÃO": string;
+  readonly "SEGMENTO DE ATUAÇÃO": string;
 
   constructor() {}
 }

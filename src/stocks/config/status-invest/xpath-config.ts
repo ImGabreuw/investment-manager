@@ -1,14 +1,12 @@
 const INDICATORS = {
   /*
-  Resumo
+  Indicadores de preço
   */
   "VALOR ATUAL": `/html/body/main/div[2]/div/div[1]/div/div[1]/div/div[1]/strong`,
   "MIN. 52 SEMANAS": `/html/body/main/div[2]/div/div[1]/div/div[2]/div/div[1]/strong`,
   "MIN. MÊS": `/html/body/main/div[2]/div/div[1]/div/div[2]/div/div[2]/div/span[2]`,
   "MÁX. 52 SEMANAS": `/html/body/main/div[2]/div/div[1]/div/div[3]/div/div[1]/strong`,
   "MÁX. MÊS": `/html/body/main/div[2]/div/div[1]/div/div[3]/div/div[2]/div/span[2]`,
-  "DIVIDEND YIELD": `/html/body/main/div[2]/div/div[1]/div/div[4]/div/div[1]/strong`,
-  "ÚLTIMOS 12 MESES": `/html/body/main/div[2]/div/div[1]/div/div[4]/div/div[2]/div/span[2]`,
   "VALORIZAÇÃO (12M)": `/html/body/main/div[2]/div/div[1]/div/div[5]/div/div[1]/strong`,
   "MÊS ATUAL": `/html/body/main/div[2]/div/div[1]/div/div[5]/div/div[2]/div/span[2]/b`,
   /*
@@ -19,8 +17,10 @@ const INDICATORS = {
   "LIQ. MÉD. DIÁRIA": `/html/body/main/div[2]/div/div[5]/div/div/div[3]/div/div/div/strong`,
   "PARTICIPAÇÃO NO IBOV": `/html/body/main/div[2]/div/div[5]/div/div/div[4]/div/a/div/div/strong`,
   /*
-  Indicadores de valuation
-  */
+ Indicadores de valuation
+ */
+  "DIVIDEND YIELD": `/html/body/main/div[2]/div/div[1]/div/div[4]/div/div[1]/strong`,
+  "ÚLTIMOS 12 MESES": `/html/body/main/div[2]/div/div[1]/div/div[4]/div/div[2]/div/span[2]`,
   "P/L": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[2]/div/div/strong`,
   "PEG Ratio": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[3]/div/div/strong`,
   "P/VP": `/html/body/main/div[2]/div/div[7]/div[2]/div/div[1]/div/div[4]/div/div/strong`,
