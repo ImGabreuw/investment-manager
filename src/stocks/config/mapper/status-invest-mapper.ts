@@ -1,5 +1,4 @@
 import { StatusInvestStockDTO } from "../../api/dto/status-invest-stock-dto.js";
-import { PriceIndicator } from "../../entities/indicators/price-indicator.js";
 import { Stock } from "../../entities/stock.js";
 
 const priceIndicator = {
@@ -69,18 +68,18 @@ const growthIndicator = {
 };
 
 const payoutIndicator = {
-  averagePayout: "PAYOUT MÉDIA",
-  currentPayout: "PAYOUT ATUAL",
-  minPayout: "PAYOUT MENOR VALOR",
-  minPayoutYear: "PAYOUT ANO MENOR VALOR",
-  maxPayout: "PAYOUT MAIOR VALOR",
-  maxPayoutYear: "PAYOUT ANO MAIOR VALOR",
+  averagePayout: "MÉDIA",
+  currentPayout: "ATUAL",
+  minPayout: "MENOR VALOR",
+  minPayoutYear: "ANO MENOR VALOR",
+  maxPayout: "MAIOR VALOR",
+  maxPayoutYear: "ANO MAIOR VALOR",
 };
 
 const interpreseInfo = {
   name: "NOME DA EMPRESA",
   netWorth: "PATRIMÔNIO LÍQUIDO",
-  assets: " ATIVOS",
+  assets: "ATIVOS",
   currentAssets: "ATIVO CIRCULANTE",
   grossDebt: "DÍVIDA BRUTA",
   marketValue: "VALOR DE MERCADO",
@@ -110,7 +109,7 @@ class StatusInvestMapper {
   private constructor() {}
 
   static async map(dto: StatusInvestStockDTO): Promise<Stock> {
-    const stock = {} as Stock;
+    let stock = new Stock();
 
     for (const section of Object.keys(INDICATORS)) {
       const indicator = eval(`INDICATORS["${section}"]`);
@@ -118,7 +117,9 @@ class StatusInvestMapper {
       const cache = new Map<string, any>();
 
       for (const indicatorName of Object.keys(indicator)) {
-        const indicatorNameDTO = eval(`INDICATORS["${section}"]["${indicatorName}"]`);
+        const indicatorNameDTO = eval(
+          `INDICATORS["${section}"]["${indicatorName}"]`
+        );
         const indicatorValueDTO = eval(`dto["${indicatorNameDTO}"]`);
 
         cache.set(indicatorName, indicatorValueDTO);
@@ -137,13 +138,16 @@ class StatusInvestMapper {
 
       indicatorInstanceArguments = indicatorInstanceArguments.slice(0, -1);
 
-      const indicatorClassName = StatusInvestMapper.getIndicatorClassName(section);
-      const indicatorRelativeFile = StatusInvestMapper.getIndicatorRelativePath(section);
+      const indicatorClassName =
+        StatusInvestMapper.getIndicatorClassName(section);
+      const indicatorRelativeFile =
+        StatusInvestMapper.getIndicatorRelativePath(section);
 
       const indicatorFile = await import(indicatorRelativeFile);
-      const indicatorInstance = eval(`new indicatorFile.${indicatorClassName}(${indicatorInstanceArguments});`);
-
-      console.log(indicatorInstance);
+      const indicatorInstance = eval(
+        `new indicatorFile.${indicatorClassName}(${indicatorInstanceArguments});`
+      );
+      eval(`stock.${section} = {...indicatorInstance}`);
     }
 
     return stock;
@@ -156,11 +160,13 @@ class StatusInvestMapper {
   static getIndicatorFilename(section: string): string {
     const splitByCapitalLetter = section.split(/(?=[A-Z])/);
 
-    return splitByCapitalLetter[0] + "-" + splitByCapitalLetter[1].toLowerCase();
+    return (
+      splitByCapitalLetter[0] + "-" + splitByCapitalLetter[1].toLowerCase()
+    );
   }
 
   static getIndicatorRelativePath(section: string): string {
-    return `../../entities/indicators/${this.getIndicatorFilename(section)}.js`
+    return `../../entities/indicators/${this.getIndicatorFilename(section)}.js`;
   }
 }
 

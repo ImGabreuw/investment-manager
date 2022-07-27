@@ -10,18 +10,18 @@ import { ValuationIndicator } from "./indicators/valuation-indicator";
 import { InterpreseInfo } from "./indicators/interprese-info";
 
 class Stock {
-  constructor(
-    readonly priceIndicator: PriceIndicator,
-    readonly valorizationIndicator: ValorizationIndicator,
-    readonly negotiationIndicator: NegotiationIndicator,
-    readonly valuationIndicator: ValuationIndicator,
-    readonly debtIndicator: DebtIndicator,
-    readonly efficienciesIndicator: EfficiencyIndicator,
-    readonly rentabilityIndicator: RentabilityIndicator,
-    readonly growthIndicator: GrowthIndicator,
-    readonly payoutIndicator: PayoutIndicator,
-    readonly interpreseInfo: InterpreseInfo
-  ) {}
+  "priceIndicator": PriceIndicator;
+  "valorizationIndicator": ValorizationIndicator;
+  "negotiationIndicator": NegotiationIndicator;
+  "valuationIndicator": ValuationIndicator;
+  "debtIndicator": DebtIndicator;
+  "efficiencyIndicator": EfficiencyIndicator;
+  "rentabilityIndicator": RentabilityIndicator;
+  "growthIndicator": GrowthIndicator;
+  "payoutIndicator": PayoutIndicator;
+  "interpreseInfo": InterpreseInfo;
+
+  constructor() {}
 }
 
 export { Stock };

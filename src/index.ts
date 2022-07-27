@@ -30,5 +30,6 @@ async function stockTest() {
   await statusInvest.search("TAEE11");
   const dto = await statusInvest.extract();
 
+  console.log(dto);
   console.log(await StatusInvestMapper.map(dto));
 }
