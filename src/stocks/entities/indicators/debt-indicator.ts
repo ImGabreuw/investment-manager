@@ -1,11 +1,11 @@
 class DebtIndicator {
   constructor(
-    readonly netDebtPerNetWorth: number | null,
-    readonly netDebtPerEBITDA: number | null,
-    readonly netDebtPerEBIT: number | null,
-    readonly netWorthPerAssets: number | null,
-    readonly liabilitiesPerAssets: number | null,
-    readonly currentLiquidity: number | null
+    readonly netDebtPerNetWorth: number,
+    readonly netDebtPerEBITDA: number,
+    readonly netDebtPerEBIT: number,
+    readonly netWorthPerAssets: number,
+    readonly liabilitiesPerAssets: number,
+    readonly currentLiquidity: number
   ) {}
 }
 

@@ -1,9 +1,9 @@
 class RentabilityIndicator {
   constructor(
-    readonly roe: number | null,
-    readonly roa: number | null,
-    readonly roic: number | null,
-    readonly assetTurnover: number | null
+    readonly roe: number,
+    readonly roa: number,
+    readonly roic: number,
+    readonly assetTurnover: number
   ) {}
 }
 

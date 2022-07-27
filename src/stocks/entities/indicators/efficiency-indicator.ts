@@ -1,9 +1,9 @@
 class EfficiencyIndicator {
   constructor(
-    readonly grossMargin: number | null,
-    readonly EBITDAMargin: number | null,
-    readonly EBITMargin: number | null,
-    readonly netMargin: number | null
+    readonly grossMargin: number,
+    readonly EBITDAMargin: number,
+    readonly EBITMargin: number,
+    readonly netMargin: number
   ) {}
 }
 

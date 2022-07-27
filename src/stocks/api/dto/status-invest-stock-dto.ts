@@ -7,6 +7,9 @@ class StatusInvestStockDTO {
   readonly "MIN. MÊS": number;
   readonly "MÁX. 52 SEMANAS": number;
   readonly "MÁX. MÊS": number;
+  /*
+  Indicadores de valorização
+  */
   readonly "VALORIZAÇÃO (12M)": number;
   readonly "MÊS ATUAL": number;
   /*

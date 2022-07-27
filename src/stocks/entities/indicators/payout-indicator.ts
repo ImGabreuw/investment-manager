@@ -1,11 +1,11 @@
 class PayoutIndicator {
   constructor(
-    readonly averagePayout: number | null,
-    readonly currentPayout: number | null,
-    readonly minPayout: number | null,
-    readonly minPayoutYear: number | null,
-    readonly maxPayout: number | null,
-    readonly maxPayoutYear: number | null
+    readonly averagePayout: number,
+    readonly currentPayout: number,
+    readonly minPayout: number,
+    readonly minPayoutYear: number,
+    readonly maxPayout: number,
+    readonly maxPayoutYear: number
   ) {}
 }
 

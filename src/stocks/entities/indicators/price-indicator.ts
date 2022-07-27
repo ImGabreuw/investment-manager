@@ -1,10 +1,10 @@
 class PriceIndicator {
   constructor(
-    readonly currentPrice: number | null,
-    readonly minPriceIn1Year: number | null,
-    readonly minPriceInCurrentMonth: number | null,
-    readonly maxPriceIn1Year: number | null,
-    readonly maxPriceInCurrentMonth: number | null
+    readonly currentPrice: number,
+    readonly minPriceIn1Year: number,
+    readonly minPriceInCurrentMonth: number,
+    readonly maxPriceIn1Year: number,
+    readonly maxPriceInCurrentMonth: number
   ) {}
 }
 

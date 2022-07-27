@@ -1,8 +1,7 @@
-
 class ValorizationIndicator {
   constructor(
-    readonly valuationIn1Year: number | null,
-    readonly valuationInCurrentMonth: number | null
+    readonly valuationIn1Year: number,
+    readonly valuationInCurrentMonth: number
   ) {}
 }
 

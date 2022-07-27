@@ -1,12 +1,13 @@
 import { DebtIndicator } from "./indicators/debt-indicator";
 import { EfficiencyIndicator } from "./indicators/efficiency-indicator";
-import { GrowIndicator } from "./indicators/grow-indicator";
+import { GrowthIndicator } from "./indicators/growth-indicator";
 import { NegotiationIndicator } from "./indicators/negotiation-indicator";
 import { PayoutIndicator } from "./indicators/payout-indicator";
 import { PriceIndicator } from "./indicators/price-indicator";
 import { RentabilityIndicator } from "./indicators/rentability-indicator";
 import { ValorizationIndicator } from "./indicators/valorization-indicator";
 import { ValuationIndicator } from "./indicators/valuation-indicator";
+import { InterpreseInfo } from "./interprese-info";
 
 class Stock {
   constructor(
@@ -17,7 +18,10 @@ class Stock {
     readonly debtIndicator: DebtIndicator,
     readonly efficienciesIndicator: EfficiencyIndicator,
     readonly rentabilityIndicator: RentabilityIndicator,
-    readonly growIndicator: GrowIndicator,
-    readonly payoutIndicator: PayoutIndicator
+    readonly growthIndicator: GrowthIndicator,
+    readonly payoutIndicator: PayoutIndicator,
+    readonly interpreseInfo: InterpreseInfo
   ) {}
 }
+
+export { Stock };
