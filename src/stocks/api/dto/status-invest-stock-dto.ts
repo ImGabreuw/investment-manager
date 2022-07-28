@@ -1,29 +1,31 @@
-class StatusInvestStockDTO {
+import { DTO } from "../../../domain/dto";
+
+class StatusInvestStockDTO implements DTO {
   /*
   Indicadores de preço
   */
-  readonly "VALOR ATUAL": number;
-  readonly "MIN. 52 SEMANAS": number;
-  readonly "MIN. MÊS": number;
-  readonly "MÁX. 52 SEMANAS": number;
-  readonly "MÁX. MÊS": number;
+  readonly "Preço atual": number;
+  readonly "Preço mínimo (12 meses)": number;
+  readonly "Preço mínimo (mês atual)": number;
+  readonly "Preço máximo (12 meses)": number;
+  readonly "Preço máximo (mês atual)": number;
   /*
   Indicadores de valorização
   */
-  readonly "VALORIZAÇÃO (12M)": number;
-  readonly "MÊS ATUAL": number;
+  readonly "Valorização (12 meses)": number;
+  readonly "Valorização (mês atual)": number;
   /*
   Indicadores de negociação
   */
-  readonly "TIPO AÇÃO": string;
-  readonly "TAG ALONG": number;
-  readonly "LIQ. MÉD. DIÁRIA": number;
-  readonly "PARTICIPAÇÃO NO IBOV": number;
+  readonly "Tipo ação": string;
+  readonly "Tag along": number;
+  readonly "Liquidez diária média (30 dias)": number;
+  readonly "Participação no IBOV": number;
   /*
   Indicadores de valuation
   */
-  readonly "DIVIDEND YIELD": number;
-  readonly "ÚLTIMOS 12 MESES": number;
+  readonly "Dividend yield (12 meses)": number;
+  readonly "Dividendos (12 meses)": number;
   readonly "P/L": number;
   readonly "PEG Ratio": number;
   readonly "P/VP": number;
@@ -35,61 +37,63 @@ class StatusInvestStockDTO {
   readonly "P/Ativo": number;
   readonly "LPA": number;
   readonly "P/SR": number;
-  readonly "P/Cap. Giro": number;
-  readonly "P/Ativo Circ. Liq.": number;
+  readonly "P/Capital de giro": number;
+  readonly "P/Ativo circulante liquido": number;
   /*
   Indicadores de endividamento
   */
-  readonly "Dív. líquida/PL": number;
-  readonly "Dív. líquida/EBITDA": number;
-  readonly "Dív. líquida/EBIT": number;
+  readonly "Dívida líquida/PL": number;
+  readonly "Dívida líquida/EBITDA": number;
+  readonly "Dívida líquida/EBIT": number;
   readonly "PL/Ativos": number;
   readonly "Passivos/Ativos": number;
-  readonly "Liq. corrente": number;
+  readonly "Liquidez corrente": number;
   /*
   Indicadores de eficiência
   */
-  readonly "M. Bruta": number;
-  readonly "M. EBITDA": number;
-  readonly "M. EBIT": number;
-  readonly "M. Líquida": number;
+  readonly "Margem bruta": number;
+  readonly "Margem EBITDA": number;
+  readonly "Margem EBIT": number;
+  readonly "Margem líquida": number;
   /*
   Indicadores de rentabilidade
   */
   readonly "ROE": number;
   readonly "ROA": number;
   readonly "ROIC": number;
-  readonly "Giro ativos": number;
+  readonly "Giro do ativo": number;
   /*
   Indicadores de crescimento
   */
-  readonly "CAGR Receitas 5 anos": number;
-  readonly "CAGR Lucros 5 anos": number;
+  readonly "CAGR receitas (5 anos)": number;
+  readonly "CAGR lucros (5 anos)": number;
   /*
   Payout
   */
-  readonly "MÉDIA": number;
-  readonly "ATUAL": number;
-  readonly "MENOR VALOR": number;
-  readonly "ANO MENOR VALOR": number;
-  readonly "MAIOR VALOR": number;
-  readonly "ANO MAIOR VALOR": number;
+  readonly "Payout médio": number;
+  readonly "Payout atual": number;
+  readonly "Payout mínimo": number;
+  readonly "Payout mínimo (ano)": number;
+  readonly "Payout máximo": number;
+  readonly "Payout máximo (ano)": number;
   /*
   Informações da empresa
   */
-  readonly "NOME DA EMPRESA": string;
-  readonly "PATRIMÔNIO LÍQUIDO": number;
-  readonly "ATIVOS": number;
-  readonly "ATIVO CIRCULANTE": number;
-  readonly "DÍVIDA BRUTA": number;
-  readonly "VALOR DE MERCADO": number;
-  readonly "VALOR DE FIRMA": number;
-  readonly "Nº TOTAL DE PAPÉIS": number;
-  readonly "SEGMENTO DE LISTAGEM": string;
-  readonly "FREE FLOAT": number;
-  readonly "SETOR DE ATUAÇÃO": string;
-  readonly "SUBSETOR DE ATUAÇÃO": string;
-  readonly "SEGMENTO DE ATUAÇÃO": string;
+  readonly "Nome da empresa": string;
+  readonly "patrimônio líquido": number;
+  readonly "Ativos": number;
+  readonly "Ativo circulante": number;
+  readonly "Dívida bruta": number;
+  readonly "Caixa": number;
+  readonly "Dívida líquida": number;
+  readonly "Valor de mercado": number;
+  readonly "Valor da empresa": number;
+  readonly "Número total de ações": number;
+  readonly "Free float": number;
+  readonly "Segmento de listagem": string;
+  readonly "Setor de atuação": string;
+  readonly "Subsetor de atuação": string;
+  readonly "Segmento de atuação": string;
 
   constructor() {}
 }
