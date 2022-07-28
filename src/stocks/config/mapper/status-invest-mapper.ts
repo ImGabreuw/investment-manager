@@ -114,7 +114,7 @@ class StatusInvestMapper {
     for (const section of Object.keys(INDICATORS)) {
       const indicator = eval(`INDICATORS["${section}"]`);
 
-      const cache = new Map<string, any>();
+      const cache = [];
 
       for (const indicatorName of Object.keys(indicator)) {
         const indicatorNameDTO = eval(
@@ -122,30 +122,19 @@ class StatusInvestMapper {
         );
         const indicatorValueDTO = eval(`dto["${indicatorNameDTO}"]`);
 
-        cache.set(indicatorName, indicatorValueDTO);
+        cache.push(indicatorValueDTO);
       }
 
-      let indicatorInstanceArguments = "";
-
-      for (const value of cache.values()) {
-        if (typeof value === "string") {
-          indicatorInstanceArguments += `"${value}",`;
-          continue;
-        }
-
-        indicatorInstanceArguments += `${value},`;
-      }
-
-      indicatorInstanceArguments = indicatorInstanceArguments.slice(0, -1);
-
+      const args = StatusInvestMapper.convertToArguments(cache);
       const indicatorClassName =
         StatusInvestMapper.getIndicatorClassName(section);
       const indicatorRelativeFile =
         StatusInvestMapper.getIndicatorRelativePath(section);
 
       const indicatorFile = await import(indicatorRelativeFile);
+
       const indicatorInstance = eval(
-        `new indicatorFile.${indicatorClassName}(${indicatorInstanceArguments});`
+        `new indicatorFile.${indicatorClassName}(${args});`
       );
       eval(`stock.${section} = {...indicatorInstance}`);
     }
@@ -153,11 +142,11 @@ class StatusInvestMapper {
     return stock;
   }
 
-  static getIndicatorClassName(section: string): string {
+  private static getIndicatorClassName(section: string): string {
     return section.charAt(0).toUpperCase() + section.slice(1);
   }
 
-  static getIndicatorFilename(section: string): string {
+  private static getIndicatorFilename(section: string): string {
     const splitByCapitalLetter = section.split(/(?=[A-Z])/);
 
     return (
@@ -165,8 +154,35 @@ class StatusInvestMapper {
     );
   }
 
-  static getIndicatorRelativePath(section: string): string {
+  private static getIndicatorRelativePath(section: string): string {
     return `../../entities/indicators/${this.getIndicatorFilename(section)}.js`;
+  }
+
+  private static convertToArguments(values: any[]): string {
+    let args = "";
+
+    values.forEach((value, index) => {
+      if (index === values.length - 1) {
+
+        if (typeof value === "string") {
+          args += `"${value}"`;
+          return
+        }
+
+        args += value;
+
+        return;
+      }
+
+      if (typeof value === "string") {
+        args += `"${value}",`;
+        return;
+      }
+
+      args += `${value},`
+    });
+
+    return args;
   }
 }
 
