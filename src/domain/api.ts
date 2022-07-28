@@ -32,6 +32,11 @@ abstract class API {
         const content = await PuppeteerHelper.extractTextFrom(this.page, xPath);
         const normalizedContent = this.normalize(content);
 
+        if (typeof normalizedContent === "string") {
+          eval(`dto["${elementName}"] = "${normalizedContent}"`);
+          continue;
+        }
+
         eval(`dto["${elementName}"] = ${normalizedContent}`);
       }
     }
