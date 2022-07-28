@@ -1,4 +1,4 @@
-import { XPathService } from "../../domain/xpath-service";
+import { XPathService } from "../../domain/xpath-service.js";
 
 class StatusInvestXPathService extends XPathService {
   constructor() {
