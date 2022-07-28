@@ -27,9 +27,7 @@ async function stockTest() {
   const stepsService = new StepsService(page);
   const statusInvest = new StatusInvestStockAPI(page, stepsService);
 
-  await statusInvest.search("TAEE11");
-  const dto = await statusInvest.extract();
+  const dto = await statusInvest.search("TAEE11");
 
-  console.log(dto);
   console.log(await StatusInvestMapper.map(dto));
 }

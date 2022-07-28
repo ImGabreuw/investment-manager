@@ -14,11 +14,13 @@ class StatusInvestStockAPI {
     private readonly stepsService: StepsService
   ) {}
 
-  async search(stockName: string): Promise<void> {
+  async search(stockName: string): Promise<StatusInvestStockDTO> {
     await this.page.goto(`${BASE_URL}/${stockName}`);
+
+    return await this.extract();
   }
 
-  async extract(): Promise<StatusInvestStockDTO> {
+  private async extract(): Promise<StatusInvestStockDTO> {
     const dto = Object.create(new StatusInvestStockDTO());
 
     for (const sectionName of Object.keys(FULL_XPATH)) {
