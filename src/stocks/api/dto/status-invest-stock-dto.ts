@@ -80,7 +80,7 @@ class StatusInvestStockDTO implements DTO {
   Informações da empresa
   */
   readonly "Nome da empresa": string;
-  readonly "patrimônio líquido": number;
+  readonly "Patrimônio líquido": number;
   readonly "Ativos": number;
   readonly "Ativo circulante": number;
   readonly "Dívida bruta": number;
