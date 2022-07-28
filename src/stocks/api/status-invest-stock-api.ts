@@ -1,53 +1,25 @@
 import { Page } from "puppeteer";
-import { FULL_XPATH } from "../config/status-invest/xpath-config.js";
+import { API } from "../../domain/api.js";
 import { CurrencyHelper } from "../../helpers/currency-helper.js";
 import { NumberHelper } from "../../helpers/number-helper.js";
-import { PuppeteerHelper } from "../../helpers/puppeteer-helper.js";
-import { StepsService } from "../service/steps-service.js";
-import { StatusInvestStockDTO } from "./dto/status-invest-stock-dto.js";
+import { StatusInvestStepsService } from "../service/status-invest-steps-service.js";
+import { StatusInvestXPathService } from "../service/status-invest-xpath-service.js";
 
-const BASE_URL = "https://statusinvest.com.br/acoes";
-
-class StatusInvestStockAPI {
+class StatusInvestStockAPI extends API {
   constructor(
-    private readonly page: Page,
-    private readonly stepsService: StepsService
-  ) {}
-
-  async search(stockName: string): Promise<StatusInvestStockDTO> {
-    await this.page.goto(`${BASE_URL}/${stockName}`);
-
-    return await this.extract();
+    page: Page,
+    statusInvestStepsService: StatusInvestStepsService,
+    statusInvestXPathService: StatusInvestXPathService
+  ) {
+    super(
+      page,
+      statusInvestStepsService,
+      statusInvestXPathService,
+      "https://statusinvest.com.br/acoes"
+    );
   }
 
-  private async extract(): Promise<StatusInvestStockDTO> {
-    const dto = Object.create(new StatusInvestStockDTO());
-
-    for (const sectionName of Object.keys(FULL_XPATH)) {
-      const section = eval(`FULL_XPATH["${sectionName}"]`);
-
-      if (this.stepsService.hasSteps(sectionName)) {
-        await this.stepsService.executeSteps(sectionName);
-      }
-
-      for (const indicatorName of Object.keys(section)) {
-        const indicatorXpath = eval(
-          `FULL_XPATH["${sectionName}"]["${indicatorName}"]`
-        );
-
-        const indicator = await PuppeteerHelper.extractTextFrom(
-          this.page,
-          indicatorXpath
-        );
-
-        dto[indicatorName] = this.normalizeAndConvert(indicator);
-      }
-    }
-
-    return dto;
-  }
-
-  private normalizeAndConvert(text: string | null): string | number {
+  normalize(text: string | null): string | number {
     if (text === null) {
       return "-/-";
     }
