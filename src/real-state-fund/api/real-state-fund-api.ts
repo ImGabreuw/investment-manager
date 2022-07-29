@@ -2,20 +2,20 @@ import { Page } from "puppeteer";
 import { API } from "../../domain/api.js";
 import { CurrencyHelper } from "../../helpers/currency-helper.js";
 import { NumberHelper } from "../../helpers/number-helper.js";
-import { StatusInvestStepsService } from "../service/status-invest-steps-service.js";
-import { StatusInvestXPathService } from "../service/status-invest-xpath-service.js";
+import { RealStateFundStepsService } from "../services/real-state-fund-steps-service.js";
+import { RealStateFundXPathService } from "../services/real-state-fund-xpath-service.js";
 
-class StatusInvestStockAPI extends API {
+class RealStateFundAPI extends API {
   constructor(
     page: Page,
-    statusInvestStepsService: StatusInvestStepsService,
-    statusInvestXPathService: StatusInvestXPathService
+    realStateFundStepsService: RealStateFundStepsService,
+    realStateFundXPathService: RealStateFundXPathService
   ) {
     super(
       page,
-      statusInvestStepsService,
-      statusInvestXPathService,
-      "https://statusinvest.com.br/acoes"
+      realStateFundStepsService,
+      realStateFundXPathService,
+      "https://statusinvest.com.br/fundos-imobiliarios"
     );
   }
 
@@ -24,16 +24,21 @@ class StatusInvestStockAPI extends API {
       return "-/-";
     }
 
+    if (elementName === "Taxa de administração") {
+      return content.trim().toLowerCase();
+    }
+
     content = CurrencyHelper.removeBrazilianCurrencySymbol(content);
     content = NumberHelper.removePercentSymbol(content);
     content = NumberHelper.removeNumberFormat(content);
 
     if (NumberHelper.isNotNumber(content)) {
-      return content.trim();
+      content = content.trim();
+      return content.charAt(0).toUpperCase() + content.slice(1).toLowerCase();
     }
 
     return Number(Number(content).toFixed(3));
   }
 }
 
-export { StatusInvestStockAPI };
+export { RealStateFundAPI };

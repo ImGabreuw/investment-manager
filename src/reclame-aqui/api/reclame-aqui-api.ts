@@ -18,18 +18,18 @@ class ReclameAquiAPI extends API {
     );
   }
 
-  normalize(text: string | null): string | number {
-    if (text === null) {
+  normalize(elementName: string, content: string | null): string | number {
+    if (content === null) {
       return "-/-";
     }
 
-    text = NumberHelper.removePercentSymbol(text);
+    content = NumberHelper.removePercentSymbol(content);
 
-    if (NumberHelper.isNotNumber(text)) {
-      return text.trim();
+    if (NumberHelper.isNotNumber(content)) {
+      return content.trim();
     }
 
-    return Number(Number(text).toFixed(3));
+    return Number(Number(content).toFixed(3));
   }
 }
 
