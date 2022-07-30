@@ -15,17 +15,7 @@ abstract class API {
   ) {}
 
   async search<T extends DTO>(searchText: string): Promise<T> {
-    if (ReflectionHelper.isImplementsRegisterSearchSteps(this.stepsService)) {
-      this.stepsService.registerSearchSteps(searchText);
-
-      await this.page.goto(this.baseUrl);
-
-      await this.stepsService.execute(SEARCH_STEPS_SECTION_NAME);
-    } else {
-      await this.page.goto(`${this.endpointUrl}/${searchText}`);
-    }
-
-    return await this.extract();
+    return await this.tryOrRetry(searchText);
   }
 
   async extract<T extends DTO>(): Promise<T> {
@@ -50,6 +40,35 @@ abstract class API {
     }
 
     return dto;
+  }
+
+  async tryOrRetry<T extends DTO>(
+    searchText: string,
+    count: number = 0
+  ): Promise<T> {
+    if (count > 1) return {} as T;
+
+    if (count === 0) {
+      await this.page.goto(`${this.endpointUrl}/${searchText}`);
+    } else {
+      if (ReflectionHelper.isImplementsRegisterSearchSteps(this.stepsService)) {
+        this.stepsService.registerSearchSteps(searchText);
+
+        await this.page.goto(this.baseUrl);
+
+        await this.stepsService.execute(SEARCH_STEPS_SECTION_NAME);
+      } else {
+        console.warn(
+          `É recomendado implementar a busca por nome ("RegisterSearchSteps")`
+        );
+      }
+    }
+
+    try {
+      return await this.extract();
+    } catch (error) {
+      return await this.tryOrRetry(searchText, ++count);
+    }
   }
 
   abstract normalize(elementName: string, content: string | null): any;
