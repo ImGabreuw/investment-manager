@@ -15,6 +15,7 @@ class StatusInvestStockAPI extends API {
       page,
       statusInvestStepsService,
       statusInvestXPathService,
+      "https://statusinvest.com.br/",
       "https://statusinvest.com.br/acoes"
     );
   }

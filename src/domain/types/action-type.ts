@@ -1,1 +1,1 @@
-export type Action = "left_click" | "right_click";
+export type Action = "left_click" | "right_click" | "type";

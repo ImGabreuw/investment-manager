@@ -8,5 +8,6 @@ export type SectionSteps = {
 export type Step = {
   elementName: string;
   action: Action;
+  text?: string | null;
   selector: string;
 };

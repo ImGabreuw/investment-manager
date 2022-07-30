@@ -2,6 +2,12 @@ import { Page } from "puppeteer";
 import { PuppeteerHelper } from "../helpers/puppeteer-helper.js";
 import { SectionSteps } from "./types/step-type.js";
 
+const SEARCH_STEPS_SECTION_NAME = "search";
+
+interface RegisterSearchSteps {
+  registerSearchSteps(searchText: string): void;
+}
+
 abstract class StepsService {
   private readonly STEPS = new Map<string, SectionSteps>();
 
@@ -32,10 +38,20 @@ abstract class StepsService {
       throw new Error("seção de etapas inválida");
     }
 
-    for (const step of section.steps) {
-      await PuppeteerHelper.click(this.page, step.selector, step.action);
+    for (const { elementName, action, text, selector } of section.steps) {
+      if (action === "type") {
+        if (!text) {
+          throw new Error("texto inválido");
+        }
+
+        await PuppeteerHelper.type(this.page, selector, text);
+
+        continue;
+      }
+
+      await PuppeteerHelper.click(this.page, selector, action);
     }
   }
 }
 
-export { StepsService };
+export { StepsService, RegisterSearchSteps, SEARCH_STEPS_SECTION_NAME };

@@ -14,7 +14,8 @@ class ReclameAquiAPI extends API {
       page,
       reclameAquiStepsService,
       reclameAquiXPathService,
-      "https://www.reclameaqui.com.br/empresa"
+      "https://www.reclameaqui.com.br",
+      "https://www.reclameaqui.com.br/empresa",
     );
   }
 

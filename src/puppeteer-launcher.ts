@@ -17,8 +17,8 @@ const page = await browser.newPage();
 page.setViewport({ width: 1200, height: 1000 });
 
 await realStateFundTest();
-// await stockTest();
-// await reclameAquiTest();
+await stockTest();
+await reclameAquiTest();
 
 await browser.close();
 
@@ -61,7 +61,7 @@ async function reclameAquiTest() {
     reclameAquiXPathService
   );
 
-  const result = await reclameAquiAPI.search<ReclameAquiDTO>("suno-research");
+  const result = await reclameAquiAPI.search<ReclameAquiDTO>("Suno Research");
 
   console.log(result);
 }

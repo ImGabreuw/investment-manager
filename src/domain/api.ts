@@ -1,21 +1,29 @@
 import { Page } from "puppeteer";
-import { CurrencyHelper } from "../helpers/currency-helper.js";
-import { NumberHelper } from "../helpers/number-helper.js";
 import { PuppeteerHelper } from "../helpers/puppeteer-helper.js";
+import { ReflectionHelper } from "../helpers/reflection-helper.js";
 import { DTO } from "./dto.js";
-import { StepsService } from "./steps-service.js";
+import { SEARCH_STEPS_SECTION_NAME, StepsService } from "./steps-service.js";
 import { XPathService } from "./xpath-service.js";
 
 abstract class API {
   constructor(
-    private readonly page: Page,
-    private readonly stepsService: StepsService,
-    private readonly xpathService: XPathService,
-    private readonly endpointUrl: string
+    protected readonly page: Page,
+    protected readonly stepsService: StepsService,
+    protected readonly xpathService: XPathService,
+    protected readonly baseUrl: string,
+    protected readonly endpointUrl: string
   ) {}
 
-  async search<T extends DTO>(code: string): Promise<T> {
-    await this.page.goto(`${this.endpointUrl}/${code}`);
+  async search<T extends DTO>(searchText: string): Promise<T> {
+    if (ReflectionHelper.isImplementsRegisterSearchSteps(this.stepsService)) {
+      this.stepsService.registerSearchSteps(searchText);
+
+      await this.page.goto(this.baseUrl);
+
+      await this.stepsService.execute(SEARCH_STEPS_SECTION_NAME);
+    } else {
+      await this.page.goto(`${this.endpointUrl}/${searchText}`);
+    }
 
     return await this.extract();
   }
