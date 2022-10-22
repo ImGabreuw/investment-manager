@@ -51,7 +51,7 @@ abstract class API {
 
     if (count === 0) {
       const response = await this.page.goto(
-        `${this.endpointUrl}/${searchText}`
+        `${this.endpointUrl}${searchText}`
       );
 
       if (!response?.ok()) {

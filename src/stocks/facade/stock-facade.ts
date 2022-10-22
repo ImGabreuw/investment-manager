@@ -25,8 +25,8 @@ class StockFacade {
     const fundamentusXPathService = new FundamentusXPathService();
     this.fundamentusStockAPI = new FundamentusStockAPI(
       this.page,
-      statusInvestStepsService,
-      statusInvestXPathService
+      fundamentusStepsService,
+      fundamentusXPathService
     );
   }
 

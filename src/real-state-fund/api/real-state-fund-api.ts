@@ -15,8 +15,8 @@ class RealStateFundAPI extends API {
       page,
       realStateFundStepsService,
       realStateFundXPathService,
-      "https://statusinvest.com.br",
-      "https://statusinvest.com.br/fundos-imobiliarios"
+      "https://statusinvest.com.br/",
+      "https://statusinvest.com.br/fundos-imobiliarios/"
     );
   }
 

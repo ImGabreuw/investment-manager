@@ -15,7 +15,7 @@ class FundamentusStockAPI extends API {
       page,
       fundamentusStepsService,
       fundamentusXPathService,
-      "https://www.fundamentus.com.br/?interface=mobile&interface=classic",
+      "https://www.fundamentus.com.br/index.php",
       "https://www.fundamentus.com.br/detalhes.php?papel="
     );
   }
