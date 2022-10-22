@@ -1,4 +1,5 @@
 import { Page } from "puppeteer";
+import { NumberHelper } from "../helpers/number-helper.js";
 import { PuppeteerHelper } from "../helpers/puppeteer-helper.js";
 import { ReflectionHelper } from "../helpers/reflection-helper.js";
 import { DTO } from "./dto.js";
@@ -30,7 +31,7 @@ abstract class API {
         const content = await PuppeteerHelper.extractTextFrom(this.page, xPath);
         const normalizedContent = this.normalize(elementName, content);
 
-        if (typeof normalizedContent === "string") {
+        if (NumberHelper.isNotNumber(normalizedContent)) {
           eval(`dto["${elementName}"] = "${normalizedContent}"`);
           continue;
         }
@@ -49,7 +50,13 @@ abstract class API {
     if (count > 1) return {} as T;
 
     if (count === 0) {
-      await this.page.goto(`${this.endpointUrl}/${searchText}`);
+      const response = await this.page.goto(
+        `${this.endpointUrl}/${searchText}`
+      );
+
+      if (!response?.ok()) {
+        return await this.tryOrRetry(searchText, ++count);
+      }
     } else {
       if (ReflectionHelper.isImplementsRegisterSearchSteps(this.stepsService)) {
         this.stepsService.registerSearchSteps(searchText);
@@ -67,6 +74,7 @@ abstract class API {
     try {
       return await this.extract();
     } catch (error) {
+      console.log(error);
       return await this.tryOrRetry(searchText, ++count);
     }
   }

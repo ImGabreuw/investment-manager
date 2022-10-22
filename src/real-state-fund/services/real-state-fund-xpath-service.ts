@@ -3,7 +3,6 @@ import { XPathService } from "../../domain/xpath-service.js";
 class RealStateFundXPathService extends XPathService {
   constructor() {
     super();
-    this.registerAll();
   }
 
   registerAll(): void {

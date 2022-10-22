@@ -16,7 +16,7 @@ class StatusInvestStepsService
 
   registerSearchSteps(searchText: string): void {
     this.register({
-      sectionName: SEARCH_STEPS_SECTION_NAME,
+      sectionName: "status invest search steps",
       steps: [
         {
           elementName: "lupa",

@@ -3,7 +3,9 @@ import { SectionXPaths } from "./types/xpath-type.js";
 abstract class XPathService {
   private readonly XPATHS = new Map<string, SectionXPaths>;
 
-  constructor() {}
+  constructor() {
+    this.registerAll();
+  }
 
   getAll(): SectionXPaths[] {
     return Array.from(this.XPATHS.values());
@@ -32,6 +34,8 @@ abstract class XPathService {
 
     this.XPATHS.set(sectionName, sectionXPaths);
   }
+
+  abstract registerAll(): void;
 
 }
 

@@ -3,10 +3,9 @@ import { XPathService } from "../../domain/xpath-service.js";
 class ReclameAquiXPathService extends XPathService {
   constructor() {
     super();
-    this.registerAll();
   }
 
-  private registerAll(): void {
+  registerAll(): void {
     this.register({
       sectionName: "reputação",
       xPaths: [

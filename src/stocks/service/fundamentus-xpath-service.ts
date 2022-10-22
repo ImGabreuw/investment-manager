@@ -1,6 +1,6 @@
 import { XPathService } from "../../domain/xpath-service.js";
 
-class StatusInvestXPathService extends XPathService {
+class FundamentusXPathService extends XPathService {
   constructor() {
     super();
   }
@@ -11,23 +11,15 @@ class StatusInvestXPathService extends XPathService {
       xPaths: [
         {
           elementName: "Preço atual",
-          xPath: `/html/body/main/div[2]/div/div[1]/div/div[1]/div/div[1]/strong`,
+          xPath: `/html/body/div[1]/div[2]/table[1]/tbody/tr[1]/td[4]/span`,
         },
         {
           elementName: "Preço mínimo (12 meses)",
-          xPath: `/html/body/main/div[2]/div/div[1]/div/div[2]/div/div[1]/strong`,
-        },
-        {
-          elementName: "Preço mínimo (mês atual)",
-          xPath: `/html/body/main/div[2]/div/div[1]/div/div[2]/div/div[2]/div/span[2]`,
+          xPath: `/html/body/div[1]/div[2]/table[1]/tbody/tr[3]/td[4]/span`,
         },
         {
           elementName: "Preço máximo (12 meses)",
-          xPath: `/html/body/main/div[2]/div/div[1]/div/div[3]/div/div[1]/strong`,
-        },
-        {
-          elementName: "Preço máximo (mês atual)",
-          xPath: `/html/body/main/div[2]/div/div[1]/div/div[3]/div/div[2]/div/span[2]`,
+          xPath: `/html/body/div[1]/div[2]/table[1]/tbody/tr[4]/td[4]/span`,
         },
       ],
     });
@@ -36,34 +28,36 @@ class StatusInvestXPathService extends XPathService {
       sectionName: "Indicadores de valorização",
       xPaths: [
         {
-          elementName: "Valorização (12 meses)",
-          xPath: `/html/body/main/div[2]/div/div[1]/div/div[5]/div/div[1]/strong`,
-        },
-        {
           elementName: "Valorização (mês atual)",
-          xPath: `/html/body/main/div[2]/div/div[1]/div/div[5]/div/div[2]/div/span[2]/b`,
-        },
-      ],
-    });
-
-    this.register({
-      sectionName: "Indicadores de negociação",
-      xPaths: [
-        {
-          elementName: "Tipo ação",
-          xPath: `/html/body/main/div[2]/div/div[5]/div/div/div[1]/div/div/strong`,
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[3]/td[2]/span/font`,
         },
         {
-          elementName: "Tag along",
-          xPath: `/html/body/main/div[2]/div/div[5]/div/div/div[2]/div/div/div/strong`,
+          elementName: "Valorização (30 dias)",
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[4]/td[2]/span/font`,
         },
         {
-          elementName: "Liquidez diária média (30 dias)",
-          xPath: `/html/body/main/div[2]/div/div[5]/div/div/div[3]/div/div/div/strong`,
+          elementName: "Valorização (12 meses)",
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[5]/td[2]/span/font`,
         },
         {
-          elementName: "Participação no IBOV",
-          xPath: `/html/body/main/div[2]/div/div[5]/div/div/div[4]/div/a/div/div/strong`,
+          elementName: "Valorização (2022)",
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[6]/td[2]/span/font`,
+        },
+        {
+          elementName: "Valorização (2021)",
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[7]/td[2]/span/font`,
+        },
+        {
+          elementName: "Valorização (2020)",
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[8]/td[2]/span/font`,
+        },
+        {
+          elementName: "Valorização (2019)",
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[9]/td[2]/span/font`,
+        },
+        {
+          elementName: "Valorização (2018)",
+          xPath: `/html/body/div[1]/div[2]/table[3]/tbody/tr[10]/td[2]/span/font`,
         },
       ],
     });
@@ -320,4 +314,4 @@ class StatusInvestXPathService extends XPathService {
   }
 }
 
-export { StatusInvestXPathService };
+export { FundamentusXPathService };
