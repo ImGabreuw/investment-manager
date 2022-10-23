@@ -15,7 +15,7 @@ class PuppeteerHelper {
       return await page.evaluate((tag) => tag.textContent, elementHandle[0]);
     } catch (error) {
       if (error instanceof TimeoutError) {
-        console.log("element not found. Skipping...");
+        console.log(`element (${xpath}) not found. Skipping...`);
         return null;
       }
 
@@ -36,7 +36,7 @@ class PuppeteerHelper {
       await page.waitForTimeout(1_000);
     } catch (error) {
       if (error instanceof TimeoutError) {
-        console.log("element not found. Skipping...");
+        console.log(`element (${selector}) not found. Skipping...`);
         return;
       }
 
@@ -51,7 +51,7 @@ class PuppeteerHelper {
       await page.waitForTimeout(1_000);
     } catch (error) {
       if (error instanceof TimeoutError) {
-        console.log("element not found. Skipping...");
+        console.log(`element (${selector}) not found. Skipping...`);
         return;
       }
 

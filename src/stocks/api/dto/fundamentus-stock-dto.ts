@@ -22,9 +22,6 @@ class FundamentusStockDTO implements DTO {
   Indicadores de negociação
   */
   readonly "Tipo ação": string;
-  readonly "Tag along": number;
-  readonly "Liquidez diária média (30 dias)": number;
-  readonly "Participação no IBOV": number;
   /*
   Indicadores de valuation
   */

@@ -63,6 +63,16 @@ class FundamentusXPathService extends XPathService {
     });
 
     this.register({
+      sectionName: "Indicadores de negociação",
+      xPaths: [
+        {
+          elementName: "Tipo ação",
+          xPath: `/html/body/div[1]/div[2]/table[1]/tbody/tr[2]/td[2]/span`,
+        },
+      ],
+    });
+
+    this.register({
       sectionName: "Indicadores de valuation",
       xPaths: [
         {
