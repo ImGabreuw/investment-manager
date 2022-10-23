@@ -36,7 +36,7 @@ class StockFacade {
     const fundamentus =
       await this.fundamentusStockAPI.search<FundamentusStockDTO>(code);
 
-    return { ...statusInvest, ...fundamentus };
+    return { ...fundamentus, ...statusInvest };
   }
 }
 
