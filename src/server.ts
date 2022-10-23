@@ -7,10 +7,10 @@ const browser = await launch({ headless: false });
 const page = await browser.newPage();
 await page.setViewport({ width: 1200, height: 1000 });
 
-// const realStateFund = await new RealStateFundFacade(page).searchAndExtractData(
-//   "cpts11"
-// );
-// console.log(realStateFund);
+const realStateFund = await new RealStateFundFacade(page).searchAndExtractData(
+  "cpts11"
+);
+console.log(realStateFund);
 
 // const reclameAqui = await new ReclameAquiFacade(page).searchAndExtractData(
 //   "vivo"

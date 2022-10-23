@@ -128,6 +128,10 @@ class RealStateFundXPathService extends XPathService {
           xPath: `//*[@id="fund-section"]/div/div/div[2]/div/div[2]/div/div/div/strong`,
         },
         {
+          elementName: "Administrador",
+          xPath: `/html/body/main/div[3]/div/div/div[3]/div/div[2]/div[1]/div/strong`,
+        },
+        {
           elementName: "Data de fundação",
           xPath: `//*[@id="fund-section"]/div/div/div[2]/div/div[3]/div/div/strong`,
         },

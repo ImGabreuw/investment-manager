@@ -41,6 +41,7 @@ class RealStateFundDTO implements DTO {
   Informações do fundo
   */
   readonly "Nome do fundo": string;
+  readonly "Administrador": string;
   readonly "Data de fundação": string;
   readonly "Prazo de duração": string;
   readonly "Tipo ANBIMA": string;
