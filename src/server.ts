@@ -1,23 +1,53 @@
-import { launch } from "puppeteer";
+import express, { Request, Response } from "express";
+import { PuppeteerLauncher } from "./puppeteer-launcher.js";
 import { RealStateFundFacade } from "./real-state-fund/facade/real-state-fund-facade.js";
-import { ReclameAquiFacade } from "./reclame-aqui/facade/reclame-aqui-facade.js";
 import { StockFacade } from "./stocks/facade/stock-facade.js";
 
-const browser = await launch({ headless: false });
-const page = await browser.newPage();
-await page.setViewport({ width: 1200, height: 1000 });
+const app = express();
 
-const realStateFund = await new RealStateFundFacade(page).searchAndExtractData(
-  "cpts11"
+const port = 3000;
+
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
+
+app.use(express.json());
+
+app.get(
+  "/real-state-fund/:assetCode",
+  async (request: Request, response: Response) => {
+    const { assetCode } = request.params;
+    const { browser, page } = await PuppeteerLauncher.launch();
+
+    try {
+      const result = await new RealStateFundFacade(page).searchAndExtractData(
+        assetCode
+      );
+
+      return response.json(result);
+    } catch ({ errorMessage }) {
+      return response.status(400).json({
+        error: errorMessage,
+      });
+    } finally {
+      browser.close();
+    }
+  }
 );
-console.log(realStateFund);
 
-// const reclameAqui = await new ReclameAquiFacade(page).searchAndExtractData(
-//   "vivo"
-// );
-// console.log(reclameAqui);
+app.get("/stock/:assetCode", async (request: Request, response: Response) => {
+  const { assetCode } = request.params;
+  const { browser, page } = await PuppeteerLauncher.launch();
 
-const stock = await new StockFacade(page).searchAndExtractData("rani3");
-console.log(stock);
+  try {
+    const result = await new StockFacade(page).searchAndExtractData(assetCode);
 
-await browser.close();
+    return response.json(result);
+  } catch ({ errorMessage }) {
+    return response.status(400).json({
+      error: errorMessage,
+    });
+  } finally {
+    browser.close();
+  }
+});
