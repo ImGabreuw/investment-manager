@@ -1,5 +1,5 @@
 import { Page } from "puppeteer";
-import { API } from "../../domain/api.js";
+import { API } from "../../domain/adapters/api.js";
 import { NumberHelper } from "../../helpers/number-helper.js";
 import { ReclameAquiStepsService } from "../service/reclame-aqui-steps-service.js";
 import { ReclameAquiXPathService } from "../service/reclame-aqui-xpath-service.js";

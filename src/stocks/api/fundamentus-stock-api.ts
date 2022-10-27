@@ -1,5 +1,5 @@
 import { Page } from "puppeteer";
-import { API } from "../../domain/api.js";
+import { API } from "../../domain/adapters/api.js";
 import { CurrencyHelper } from "../../helpers/currency-helper.js";
 import { NumberHelper } from "../../helpers/number-helper.js";
 import { FundamentusStepsService } from "../service/fundamentus-steps-service.js";

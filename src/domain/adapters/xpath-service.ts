@@ -1,14 +1,14 @@
-import { SectionXPaths } from "./types/xpath-type.js";
+import { SectionXPaths } from "../types/xpath-type.js";
 
 abstract class XPathService {
-  private readonly XPATHS = new Map<string, SectionXPaths>;
+  private readonly XPATH = new Map<string, SectionXPaths>;
 
-  constructor() {
+  protected constructor() {
     this.registerAll();
   }
 
   getAll(): SectionXPaths[] {
-    return Array.from(this.XPATHS.values());
+    return Array.from(this.XPATH.values());
   }
 
   getBySectionName(sectionName: string): SectionXPaths {
@@ -16,11 +16,11 @@ abstract class XPathService {
       throw new Error(`não existe seção de XPath com o nome "${sectionName}"`);
     }
 
-    return this.XPATHS.get(sectionName) as SectionXPaths;
+    return this.XPATH.get(sectionName) as SectionXPaths;
   }
 
   hasXPath(sectionName: string): boolean {
-    return this.XPATHS.has(sectionName);
+    return this.XPATH.has(sectionName);
   }
 
   register(sectionXPaths: SectionXPaths): void {
@@ -32,7 +32,7 @@ abstract class XPathService {
       );
     }
 
-    this.XPATHS.set(sectionName, sectionXPaths);
+    this.XPATH.set(sectionName, sectionXPaths);
   }
 
   abstract registerAll(): void;

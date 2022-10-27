@@ -30,7 +30,7 @@ app.get(
         error: errorMessage,
       });
     } finally {
-      browser.close();
+      await browser.close();
     }
   }
 );
@@ -48,6 +48,6 @@ app.get("/stock/:assetCode", async (request: Request, response: Response) => {
       error: errorMessage,
     });
   } finally {
-    browser.close();
+    await browser.close();
   }
 });

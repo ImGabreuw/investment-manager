@@ -1,4 +1,4 @@
-import { DTO } from "../../../domain/dto.js";
+import { DTO } from "../../../domain/adapters/dto";
 
 class RealStateFundDTO implements DTO {
   /*

@@ -1,13 +1,13 @@
 import { Page } from "puppeteer";
-import { NumberHelper } from "../helpers/number-helper.js";
-import { PuppeteerHelper } from "../helpers/puppeteer-helper.js";
-import { ReflectionHelper } from "../helpers/reflection-helper.js";
-import { DTO } from "./dto.js";
+import { NumberHelper } from "../../helpers/number-helper.js";
+import { PuppeteerHelper } from "../../helpers/puppeteer-helper.js";
+import { ReflectionHelper } from "../../helpers/reflection-helper.js";
+import { DTO } from "./dto";
 import { SEARCH_STEPS_SECTION_NAME, StepsService } from "./steps-service.js";
 import { XPathService } from "./xpath-service.js";
 
 abstract class API {
-  constructor(
+  protected constructor(
     protected readonly page: Page,
     protected readonly stepsService: StepsService,
     protected readonly xpathService: XPathService,

@@ -1,6 +1,6 @@
-import { Page } from "puppeteer";
-import { PuppeteerHelper } from "../helpers/puppeteer-helper.js";
-import { SectionSteps } from "./types/step-type.js";
+import {Page} from "puppeteer";
+import {PuppeteerHelper} from "../../helpers/puppeteer-helper.js";
+import {SectionSteps} from "../types/step-type.js";
 
 const SEARCH_STEPS_SECTION_NAME = "search";
 
@@ -38,7 +38,7 @@ abstract class StepsService {
       throw new Error("seção de etapas inválida");
     }
 
-    for (const { elementName, action, text, selector } of section.steps) {
+    for (const { action, text, selector } of section.steps) {
       if (action === "type") {
         if (!text) {
           throw new Error("texto inválido");

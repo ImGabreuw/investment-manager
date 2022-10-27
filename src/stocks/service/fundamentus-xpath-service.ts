@@ -1,4 +1,4 @@
-import { XPathService } from "../../domain/xpath-service.js";
+import { XPathService } from "../../domain/adapters/xpath-service.js";
 
 class FundamentusXPathService extends XPathService {
   constructor() {

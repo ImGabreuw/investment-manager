@@ -1,4 +1,4 @@
-import { DTO } from "../../../domain/dto";
+import { DTO } from "../../../domain/adapters/dto";
 
 class StatusInvestStockDTO implements DTO {
   /*

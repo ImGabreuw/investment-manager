@@ -1,4 +1,4 @@
-import { XPathService } from "../../domain/xpath-service.js";
+import {XPathService} from "../../domain/adapters/xpath-service.js";
 
 class RealStateFundXPathService extends XPathService {
   constructor() {
@@ -180,4 +180,4 @@ class RealStateFundXPathService extends XPathService {
   }
 }
 
-export { RealStateFundXPathService };
+export {RealStateFundXPathService};

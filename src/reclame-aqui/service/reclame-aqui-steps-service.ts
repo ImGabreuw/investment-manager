@@ -1,10 +1,5 @@
-import { Page } from "puppeteer";
-import { } from "../../domain/api.js";
-import {
-  RegisterSearchSteps,
-  SEARCH_STEPS_SECTION_NAME,
-  StepsService
-} from "../../domain/steps-service.js";
+import {Page} from "puppeteer";
+import {RegisterSearchSteps, SEARCH_STEPS_SECTION_NAME, StepsService} from "../../domain/adapters/steps-service.js";
 
 class ReclameAquiStepsService
   extends StepsService
