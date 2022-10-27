@@ -2,7 +2,7 @@ class LocaleHelper {
   static getUserLocale(): string {
     const languagePreferences = navigator.languages;
 
-    if (languagePreferences === undefined || languagePreferences.length === 0) {
+    if (!languagePreferences || languagePreferences.length === 0) {
       return "pt-br";
     }
 
