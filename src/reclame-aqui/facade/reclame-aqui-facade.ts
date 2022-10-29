@@ -1,6 +1,6 @@
 import { Page } from "puppeteer";
-import { ReclameAquiDTO } from "../api/dto/reclame-aqui-dto.js";
-import { ReclameAquiAPI } from "../api/reclame-aqui-api.js";
+import { ReclameAquiDTO } from "../gateway/dto/reclame-aqui-dto.js";
+import { ReclameAquiAPI } from "../gateway/reclame-aqui-api.js";
 import { ReclameAquiStepsService } from "../service/reclame-aqui-steps-service.js";
 import { ReclameAquiXPathService } from "../service/reclame-aqui-xpath-service.js";
 

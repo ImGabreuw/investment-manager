@@ -1,8 +1,8 @@
 import { Page } from "puppeteer";
-import { FundamentusStockDTO } from "../api/dto/fundamentus-stock-dto.js";
-import { StatusInvestStockDTO } from "../api/dto/status-invest-stock-dto.js";
-import { FundamentusStockAPI } from "../api/fundamentus-stock-api.js";
-import { StatusInvestStockAPI } from "../api/status-invest-stock-api.js";
+import { FundamentusStockDTO } from "../gateway/dto/fundamentus-stock-dto.js";
+import { StatusInvestStockDTO } from "../gateway/dto/status-invest-stock-dto.js";
+import { FundamentusStockAPI } from "../gateway/fundamentus-stock-api.js";
+import { StatusInvestStockAPI } from "../gateway/status-invest-stock-api.js";
 import { FundamentusStepsService } from "../service/fundamentus-steps-service.js";
 import { FundamentusXPathService } from "../service/fundamentus-xpath-service.js";
 import { StatusInvestStepsService } from "../service/status-invest-steps-service.js";
